@@ -1,0 +1,525 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Beyond Fitness Festival</title>
+
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700;900&display=swap" rel="stylesheet">
+
+    <link rel="stylesheet" href="css/style.css" />
+</head>
+
+<body>
+
+    <nav class="nav" id="navbar">
+        <div class="nav__inner">
+            <a class="nav__logo" href="#top" aria-label="Home">
+                <img src="img/logo.png" alt="Beyond Fitness" />
+            </a>
+
+            <button class="nav__hamburger" id="hamburger" aria-label="Open menu" aria-expanded="false">
+                <span></span><span></span><span></span>
+            </button>
+
+            <ul class="nav__links" id="nav-links">
+                <li><a class="nav__link" href="#classes">Classes schedule</a></li>
+                <li><a class="nav__link" href="#talks">Talks Schedule</a></li>
+                <li><a class="nav__link" href="#market">Market</a></li>
+                <li><a class="nav__link" href="#faq">FAQ</a></li>
+                <li><a class="nav__link nav__cta" href="https://coacheey.com/public-session/0579db1b-ba28-4fa5-b588-1280867dc0da">Get your tickets</a></li>
+            </ul>
+        </div>
+    </nav>
+
+    <main id="top">
+        <!-- HERO (orange band like screenshot) -->
+        <section class="hero" id="hero">
+            <div class="container hero__grid">
+                <div class="hero__left">
+                    <h1 class="hero__title">BEYOND<br>FITNESS<br><span>FESTIVAL</span></h1>
+                    <p class="hero__meta">27–28 June · Kirchberg Amphitheater</p>
+
+                    <a class="btn btn--cream" href="https://coacheey.com/public-session/0579db1b-ba28-4fa5-b588-1280867dc0da">Get Your Tickets</a>
+                </div>
+
+                <div class="hero__right" aria-label="Hero images">
+                    <div class="hero__imgStack">
+                        <img class="hero__img hero__img--a" src="img/hero/hero-main.jpg" alt="Festival photo 1" />
+                        <img class="hero__img hero__img--b" src="img/hero/hero-secondary.jpg" alt="Festival photo 2" />
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- STATS BAR (dark band like screenshot) -->
+        <section class="stats" id="stats">
+            <div class="container stats__grid">
+                <div class="stat">
+                    <div class="stat__num">20+</div>
+                    <div class="stat__label">Classes<br><span>across 2 days</span></div>
+                </div>
+                <div class="stat">
+                    <div class="stat__num">10+</div>
+                    <div class="stat__label">Disciplines<br><span>Yoga to Crossfit</span></div>
+                </div>
+                <div class="stat">
+                    <div class="stat__num">10+</div>
+                    <div class="stat__label">Free talks<br><span>on movement and mindset</span></div>
+                </div>
+            </div>
+
+            <div class="container pills" aria-label="Quick nav pills">
+                <a class="pill" href="#classes">Classes</a>
+                <a class="pill" href="#talks">Talks</a>
+                <a class="pill" href="#market">Market</a>
+                <a class="pill" href="#faq">FAQ</a>
+                <a class="pill pill--accent" href="https://coacheey.com/public-session/0579db1b-ba28-4fa5-b588-1280867dc0da">Book a class</a>
+            </div>
+        </section>
+
+        <!-- CLASSES SCHEDULE (two columns, not tabs) -->
+        <section class="section" id="classes">
+            <div class="container">
+                <h2 class="h2">CLASSES SCHEDULE</h2>
+
+                <div class="scheduleGrid">
+                    <div class="scheduleCol">
+                        <div class="dayTitle">SATURDAY <span>27 June</span></div>
+
+                        <ul class="scheduleList">
+                            <li class="row row--free">
+                                <span class="time">08:00</span>
+                                <span class="name">MORNING FLOW</span>
+                                <span class="who">with Adri</span>
+                            </li>
+                            <li class="row">
+                                <span class="time">09:00</span>
+                                <span class="name">PILATES</span>
+                                <span class="who">with Alisha · House of OM</span>
+                            </li>
+                            <li class="row">
+                                <span class="time">10:00</span>
+                                <span class="name">CROSSFIT</span>
+                                <span class="who">with Axel, Esteban & Sophie · Letz CrossFit</span>
+                            </li>
+                            <li class="row">
+                                <span class="time">11:00</span>
+                                <span class="name">HIIT</span>
+                                <span class="who">with Kevin · Koru Health Club</span>
+                            </li>
+                            <li class="row">
+                                <span class="time">12:00</span>
+                                <span class="name">YOGA</span>
+                                <span class="who">with Ghaith · House of OM</span>
+                            </li>
+                            <li class="row">
+                                <span class="time">13:00</span>
+                                <span class="name">BODYCOMBAT LES MILLS</span>
+                                <span class="who">with Kevin · Koru Health Club</span>
+                            </li>
+                            <li class="row">
+                                <span class="time">14:00</span>
+                                <span class="name">SOUND BATH</span>
+                                <span class="who">with Ghaith · House of OM</span>
+                            </li>
+                            <li class="row">
+                                <span class="time">17:00</span>
+                                <span class="name">PILATES</span>
+                                <span class="who">with Milica · House of OM</span>
+                            </li>
+                            <li class="row">
+                                <span class="time">19:00</span>
+                                <span class="name">CROSSFIT</span>
+                                <span class="who">with Axel, Esteban & Sophie · Letz CrossFit</span>
+                            </li>
+                            <li class="row row--dj">
+                                <span class="time">20:00–24:00</span>
+                                <span class="name">DJ SET</span>
+                                <span class="who"></span>
+                            </li>
+                        </ul>
+
+                        <a class="btn btn--accent btn--left" href="https://coacheey.com/public-session/0579db1b-ba28-4fa5-b588-1280867dc0da">Get Your Tickets</a>
+                    </div>
+
+                    <div class="scheduleCol">
+                        <div class="dayTitle">SUNDAY <span>28 June</span></div>
+
+                        <ul class="scheduleList">
+                            <li class="row row--free">
+                                <span class="time">08:00</span>
+                                <span class="name">MORNING FLOW</span>
+                                <span class="who">with Adri</span>
+                            </li>
+                            <li class="row">
+                                <span class="time">09:00</span>
+                                <span class="name">YOGA</span>
+                                <span class="who">with Ghaith · House of OM</span>
+                            </li>
+                            <li class="row">
+                                <span class="time">10:00</span>
+                                <span class="name">CROSSFIT</span>
+                                <span class="who">with Axel, Esteban & Sophie · Letz CrossFit</span>
+                            </li>
+                            <li class="row">
+                                <span class="time">11:00</span>
+                                <span class="name">HIIT</span>
+                                <span class="who">with Noémie · Koru Health Club</span>
+                            </li>
+                            <li class="row">
+                                <span class="time">12:00</span>
+                                <span class="name">PILATES</span>
+                                <span class="who">with Alisha · House of OM</span>
+                            </li>
+                            <li class="row">
+                                <span class="time">13:00</span>
+                                <span class="name">SOUND BATH</span>
+                                <span class="who">with Ghaith · House of OM</span>
+                            </li>
+                            <li class="row">
+                                <span class="time">17:00</span>
+                                <span class="name">PILATES</span>
+                                <span class="who">with Milica · House of OM</span>
+                            </li>
+                            <li class="row">
+                                <span class="time">19:00</span>
+                                <span class="name">CROSSFIT</span>
+                                <span class="who">with Axel, Esteban & Sophie · Letz CrossFit</span>
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- BOOK MORE / SAVE MORE (orange band like screenshot) -->
+        <section class="band band--accent" id="pricing">
+            <div class="container band__grid">
+                <div class="band__text">
+                    <h2 class="h2 h2--cream">BOOK MORE,<br>SAVE MORE</h2>
+                    <p class="p p--cream">
+                        No membership, no full-festival fee — just pick the classes you want.
+                        The more you stack in one booking, the bigger your discount. All talks stay free.
+                    </p>
+                    <a class="btn btn--cream" href="https://coacheey.com/public-session/0579db1b-ba28-4fa5-b588-1280867dc0da">Build your day</a>
+                    <p class="small small--cream">Discount applied automatically at checkout.</p>
+                </div>
+
+                <div class="band__card">
+                    <img src="img/discounts-card.png" alt="Bulk booking discounts card" />
+                </div>
+            </div>
+        </section>
+
+        <!-- TALKS SCHEDULE -->
+        <section class="section" id="talks">
+            <div class="container">
+                <h2 class="h2">FREE TALKS SCHEDULE</h2>
+
+                <div class="scheduleGrid">
+                    <div class="scheduleCol">
+                        <div class="dayTitle">SATURDAY <span>27 June</span></div>
+                        <ul class="scheduleList">
+                            <li class="row"><span class="time">08:00</span><span class="name">MORNING FLOW</span><span
+                                    class="who">with Adri</span></li>
+                            <li class="row"><span class="time">09:00</span><span class="name">PILATES</span><span
+                                    class="who">with Alisha · House of OM</span></li>
+                            <li class="row"><span class="time">10:00</span><span class="name">CROSSFIT</span><span
+                                    class="who">with Axel, Esteban & Sophie · Letz CrossFit</span></li>
+                            <li class="row"><span class="time">11:00</span><span class="name">HIIT</span><span
+                                    class="who">with Kevin · Koru Health Club</span></li>
+                            <li class="row"><span class="time">12:00</span><span class="name">YOGA</span><span
+                                    class="who">with Ghaith · House of OM</span></li>
+                            <li class="row"><span class="time">13:00</span><span class="name">BODYCOMBAT LES
+                                    MILLS</span><span class="who">with Kevin · Koru Health Club</span></li>
+                            <li class="row"><span class="time">14:00</span><span class="name">SOUND BATH</span><span
+                                    class="who">with Ghaith · House of OM</span></li>
+                            <li class="row"><span class="time">17:00</span><span class="name">PILATES</span><span
+                                    class="who">with Milica · House of OM</span></li>
+                            <li class="row"><span class="time">19:00</span><span class="name">CROSSFIT</span><span
+                                    class="who">with Axel, Esteban & Sophie · Letz CrossFit</span></li>
+                            <li class="row row--dj"><span class="time">20:00–24:00</span><span class="name">DJ
+                                    SET</span><span class="who"></span></li>
+                        </ul>
+                        <a class="btn btn--accent btn--left" href="https://coacheey.com/public-session/0579db1b-ba28-4fa5-b588-1280867dc0da">Register for a talk</a>
+                    </div>
+
+                    <div class="scheduleCol">
+                        <div class="dayTitle">SUNDAY <span>28 June</span></div>
+                        <ul class="scheduleList">
+                            <li class="row"><span class="time">08:00</span><span class="name">MORNING FLOW</span><span
+                                    class="who">with Adri</span></li>
+                            <li class="row"><span class="time">09:00</span><span class="name">YOGA</span><span
+                                    class="who">with Ghaith · House of OM</span></li>
+                            <li class="row"><span class="time">10:00</span><span class="name">CROSSFIT</span><span
+                                    class="who">with Axel, Esteban & Sophie · Letz CrossFit</span></li>
+                            <li class="row"><span class="time">11:00</span><span class="name">HIIT</span><span
+                                    class="who">with Noémie · Koru Health Club</span></li>
+                            <li class="row"><span class="time">12:00</span><span class="name">PILATES</span><span
+                                    class="who">with Alisha · House of OM</span></li>
+                            <li class="row"><span class="time">13:00</span><span class="name">SOUND BATH</span><span
+                                    class="who">with Ghaith · House of OM</span></li>
+                            <li class="row"><span class="time">17:00</span><span class="name">PILATES</span><span
+                                    class="who">with Milica · House of OM</span></li>
+                            <li class="row"><span class="time">19:00</span><span class="name">CROSSFIT</span><span
+                                    class="who">with Axel, Esteban & Sophie · Letz CrossFit</span></li>
+                        </ul>
+                    </div>
+                </div>
+
+                <h3 class="h3">INSTRUCTORS & SPEAKERS</h3>
+            </div>
+        </section>
+
+        <!-- INSTRUCTORS (dark band — infinite marquee) -->
+        <section class="instructors" id="instructors">
+            <div class="marquee" aria-label="Instructors carousel">
+                <div class="marquee__track">
+                    <!-- original set -->
+                    <article class="card">
+                        <img src="img/instructors/Alisha.jpg" alt="Alisha">
+                        <div class="card__txt">
+                            <div class="card__name">Alisha</div>
+                            <div class="card__role">Pilates</div>
+                            <div class="card__org">House of OM</div>
+                        </div>
+                    </article>
+                    <article class="card">
+                        <img src="img/instructors/Axel.png" alt="Axel">
+                        <div class="card__txt">
+                            <div class="card__name">Axel</div>
+                            <div class="card__role">CrossFit</div>
+                            <div class="card__org">Letz CrossFit</div>
+                        </div>
+                    </article>
+                    <article class="card">
+                        <img src="img/instructors/Esteban.png" alt="Esteban">
+                        <div class="card__txt">
+                            <div class="card__name">Esteban</div>
+                            <div class="card__role">CrossFit</div>
+                            <div class="card__org">Letz CrossFit</div>
+                        </div>
+                    </article>
+                    <article class="card">
+                        <img src="img/instructors/Ghaith.jpg" alt="Ghaith">
+                        <div class="card__txt">
+                            <div class="card__name">Ghaith</div>
+                            <div class="card__role">Yoga &amp; Sound Bath</div>
+                            <div class="card__org">House of OM</div>
+                        </div>
+                    </article>
+                    <article class="card">
+                        <img src="img/instructors/kevin.png" alt="Kevin">
+                        <div class="card__txt">
+                            <div class="card__name">Kevin</div>
+                            <div class="card__role">HIIT &amp; Bodycombat</div>
+                            <div class="card__org">Les Mills</div>
+                        </div>
+                    </article>
+                    <article class="card">
+                        <img src="img/instructors/Milica.jpg" alt="Milica">
+                        <div class="card__txt">
+                            <div class="card__name">Milica</div>
+                            <div class="card__role">Pilates</div>
+                            <div class="card__org">House of OM</div>
+                        </div>
+                    </article>
+                    <article class="card">
+                        <img src="img/instructors/Noemie.png" alt="Noémie">
+                        <div class="card__txt">
+                            <div class="card__name">Noémie</div>
+                            <div class="card__role">HIIT</div>
+                            <div class="card__org">Koru Health Club</div>
+                        </div>
+                    </article>
+                    <article class="card">
+                        <img src="img/instructors/Sophie.png" alt="Sophie">
+                        <div class="card__txt">
+                            <div class="card__name">Sophie</div>
+                            <div class="card__role">CrossFit</div>
+                            <div class="card__org">Letz CrossFit</div>
+                        </div>
+                    </article>
+                    <!-- duplicate set for seamless loop -->
+                    <article class="card" aria-hidden="true">
+                        <img src="img/instructors/Alisha.jpg" alt="">
+                        <div class="card__txt">
+                            <div class="card__name">Alisha</div>
+                            <div class="card__role">Pilates</div>
+                            <div class="card__org">House of OM</div>
+                        </div>
+                    </article>
+                    <article class="card" aria-hidden="true">
+                        <img src="img/instructors/Axel.png" alt="">
+                        <div class="card__txt">
+                            <div class="card__name">Axel</div>
+                            <div class="card__role">CrossFit</div>
+                            <div class="card__org">Letz CrossFit</div>
+                        </div>
+                    </article>
+                    <article class="card" aria-hidden="true">
+                        <img src="img/instructors/Esteban.png" alt="">
+                        <div class="card__txt">
+                            <div class="card__name">Esteban</div>
+                            <div class="card__role">CrossFit</div>
+                            <div class="card__org">Letz CrossFit</div>
+                        </div>
+                    </article>
+                    <article class="card" aria-hidden="true">
+                        <img src="img/instructors/Ghaith.jpg" alt="">
+                        <div class="card__txt">
+                            <div class="card__name">Ghaith</div>
+                            <div class="card__role">Yoga &amp; Sound Bath</div>
+                            <div class="card__org">House of OM</div>
+                        </div>
+                    </article>
+                    <article class="card" aria-hidden="true">
+                        <img src="img/instructors/kevin.png" alt="">
+                        <div class="card__txt">
+                            <div class="card__name">Kevin</div>
+                            <div class="card__role">HIIT &amp; Bodycombat</div>
+                            <div class="card__org">Les Mills</div>
+                        </div>
+                    </article>
+                    <article class="card" aria-hidden="true">
+                        <img src="img/instructors/Milica.jpg" alt="">
+                        <div class="card__txt">
+                            <div class="card__name">Milica</div>
+                            <div class="card__role">Pilates</div>
+                            <div class="card__org">House of OM</div>
+                        </div>
+                    </article>
+                    <article class="card" aria-hidden="true">
+                        <img src="img/instructors/Noemie.png" alt="">
+                        <div class="card__txt">
+                            <div class="card__name">Noémie</div>
+                            <div class="card__role">HIIT</div>
+                            <div class="card__org">Koru Health Club</div>
+                        </div>
+                    </article>
+                    <article class="card" aria-hidden="true">
+                        <img src="img/instructors/Sophie.png" alt="">
+                        <div class="card__txt">
+                            <div class="card__name">Sophie</div>
+                            <div class="card__role">CrossFit</div>
+                            <div class="card__org">Letz CrossFit</div>
+                        </div>
+                    </article>
+                </div>
+            </div>
+        </section>
+
+        <!-- MARKET -->
+        <section class="section" id="market">
+            <div class="container">
+                <h2 class="h2">WELLNESS MARKET</h2>
+                <div class="logos">
+                    <img src="img/market/aurorebeing.png" alt="Logo 1">
+                    <img src="img/market/bemer.png" alt="Logo 2">
+                    <img src="img/market/beyondnutrition.webp" alt="Logo 3">
+                    <img src="img/market/gardinotalenti.png" alt="Logo 4">
+                    <img src="img/market/olessence.png" alt="Logo 5">
+                    <img src="img/market/vivibenelux.png" alt="Logo 6">
+                </div>
+            </div>
+        </section>
+
+        <!-- QUESTIONS / FAQ (two-column like screenshot) -->
+        <section class="questions" id="faq">
+            <div class="container questions__grid">
+                <div class="questions__left">
+                    <h2 class="h2">QUESTIONS?</h2>
+                    <p class="p">
+                        Everything about tickets, talks, kids, dogs and the weather. Still stuck?
+                        DM us on Instagram <a href="https://instagram.com/beyondfitness.lu" target="_blank"
+                            rel="noreferrer">@beyondfitness.lu</a>
+                        or send us an email: <a href="mailto:beyondfitness.lu@gmail.com">beyondfitness.lu@gmail.com</a>
+                    </p>
+                    <a class="btn btn--accent" href="#classes">Get your classes</a>
+                </div>
+
+                <div class="questions__right">
+                    <div class="faq">
+                        <button class="faq__q">HOW DOES PRICING WORK?<span class="faq__icon">+</span></button>
+                        <div class="faq__a">
+                            You pay per class — pick exactly the sessions you want. Most classes are €15,
+                            premium CrossFit sessions €18, and signature Sound Baths €20. The 08:00 Morning Flow is free
+                            both days.
+                            All wellness & sport talks are free.
+                        </div>
+
+                        <button class="faq__q">ARE THE TALKS REALLY FREE?<span class="faq__icon">+</span></button>
+                        <div class="faq__a">Yes — all talks are free.</div>
+
+                        <button class="faq__q">DO I NEED TO BOOK IN ADVANCE?<span class="faq__icon">+</span></button>
+                        <div class="faq__a">Recommended for classes (limited spots). Talks can be attended freely.</div>
+
+                        <button class="faq__q">CAN I BRING MY KIDS AND MY DOG?<span class="faq__icon">+</span></button>
+                        <div class="faq__a">Kids welcome. Dogs welcome on leash (use your final policy here).</div>
+
+                        <button class="faq__q">WHAT SHOULD I BRING?<span class="faq__icon">+</span></button>
+                        <div class="faq__a">Water, comfortable clothes, and a mat for yoga/pilates.</div>
+
+                        <button class="faq__q">WHERE EXACTLY IS IT?<span class="faq__icon">+</span></button>
+                        <div class="faq__a">Kirchberg Amphitheater (Luxembourg).</div>
+
+                        <button class="faq__q">WHAT IF IT RAINS?<span class="faq__icon">+</span></button>
+                        <div class="faq__a">Plan communicated on the day (use your final policy here).</div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- TICKETS -->
+        <section class="tickets" id="tickets">
+            <div class="container tickets__inner">
+                <h2 class="h2 h2--cream">GET YOUR TICKETS</h2>
+                <p class="p p--cream">Pick your classes. The more you stack, the bigger the discount.</p>
+                <a class="btn btn--cream" href="#">Book now</a>
+
+                <div class="priceRow">
+                    <div class="price">
+                        <div class="price__k">Most classes</div>
+                        <div class="price__v">€15</div>
+                    </div>
+                    <div class="price">
+                        <div class="price__k">CrossFit sessions</div>
+                        <div class="price__v">€18</div>
+                    </div>
+                    <div class="price">
+                        <div class="price__k">Sound baths</div>
+                        <div class="price__v">€20</div>
+                    </div>
+                    <div class="price price--free">
+                        <div class="price__k">Morning Flow</div>
+                        <div class="price__v">FREE</div>
+                    </div>
+                    <div class="price price--free">
+                        <div class="price__k">All talks</div>
+                        <div class="price__v">FREE</div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <footer class="footer">
+            <div class="container footer__inner">
+                <img class="footer__logo" src="img/logo.png" alt="Beyond Fitness" />
+                <div class="footer__meta">27–28 June · Kirchberg Amphitheater · Luxembourg</div>
+                <div class="footer__links">
+                    <a href="https://instagram.com/beyondfitness.lu" target="_blank"
+                        rel="noreferrer">@beyondfitness.lu</a>
+                    <a href="mailto:beyondfitness.lu@gmail.com">beyondfitness.lu@gmail.com</a>
+                </div>
+            </div>
+        </footer>
+    </main>
+
+    <script src="js/main.js"></script>
+</body>
+
+</html>
