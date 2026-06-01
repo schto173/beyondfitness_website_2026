@@ -510,16 +510,24 @@ section[id] { scroll-margin-top: calc(var(--navH) + 10px); }
 }
 
 /* ===== MARKET ===== */
-.logos img{
-  height: 100px;
-  width: auto;
-  object-fit: contain;
-  opacity: 1;
-  filter: none;
-  transition: transform .2s ease;
+.logos {
+  display: flex;
+  flex-wrap: nowrap;     /* prevents vertical stacking */
+  overflow-x: auto;      /* allows horizontal scrolling if they don't fit */
+  gap: 32px;
+  align-items: center;
+  justify-content: center;
+  padding: 20px 0;
+  scrollbar-width: none;  /* hides scrollbar for cleaner look */
 }
-.logos img:hover{ transform: scale(1.05); }
 
+.logos::-webkit-scrollbar {
+  display: none;        /* hides scrollbar on Chrome/Safari */
+}
+
+.logoLink, .logos img {
+  flex-shrink: 0;       /* prevents them from squishing */
+}
 /* ===== QUESTIONS / FAQ ===== */
 .questions{
   background: var(--paper);
