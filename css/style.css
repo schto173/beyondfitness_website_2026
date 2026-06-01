@@ -510,12 +510,14 @@ section[id] { scroll-margin-top: calc(var(--navH) + 10px); }
 }
 
 /* ===== MARKET ===== */
-.logos img{
-  height: 100px;
-  width: auto;
-  object-fit: contain;
-  opacity: 1;
-  filter: none;
+.logos{
+  display: flex;
+  flex-wrap: nowrap;
+  gap: 22px;
+  align-items: center;
+  justify-content: center;
+  padding-top: 8px;
+  overflow-x: auto;
 }
 .logos img:hover{ opacity: 1; filter: none; }
 
