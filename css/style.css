@@ -452,7 +452,7 @@ section[id] { scroll-margin-top: calc(var(--navH) + 10px); }
   display: flex;
   gap: 16px;
   width: max-content;
-  animation: marquee-scroll 32s linear infinite;
+  animation: marquee-scroll 20s linear infinite;
 }
 
 /* Pause on hover */
@@ -510,22 +510,15 @@ section[id] { scroll-margin-top: calc(var(--navH) + 10px); }
 }
 
 /* ===== MARKET ===== */
-.logos{
-  display: flex;
-  flex-wrap: wrap;
-  gap: 22px;
-  align-items: center;
-  justify-content: center;
-  padding-top: 8px;
-}
 .logos img{
   height: 100px;
   width: auto;
   object-fit: contain;
-  opacity: 0.7;
-  filter: grayscale(100%);
+  opacity: 1;
+  filter: none;
+  transition: transform .2s ease;
 }
-.logos img:hover{ opacity: 1; filter: none; }
+.logos img:hover{ transform: scale(1.05); }
 
 /* ===== QUESTIONS / FAQ ===== */
 .questions{
