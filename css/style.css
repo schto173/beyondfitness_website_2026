@@ -519,6 +519,14 @@ section[id] { scroll-margin-top: calc(var(--navH) + 10px); }
   padding-top: 8px;
   overflow-x: auto;
 }
+.logos img{
+  height: 140px;
+  width: auto;
+  object-fit: contain;
+  opacity: 1;
+  filter: none;
+}
+
 .logos img:hover{ opacity: 1; filter: none; }
 
 /* ===== QUESTIONS / FAQ ===== */
