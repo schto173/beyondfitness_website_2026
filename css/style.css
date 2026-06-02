@@ -416,12 +416,15 @@ section[id] { scroll-margin-top: calc(var(--navH) + 10px); }
 }
 
 .row--dj{
-  background: rgba(22,20,16,0.06);
+  background: rgba(199,41,11,0.08);
   border-radius: 12px;
   padding: 10px 10px;
   margin-top: 10px;
-  border: 1px solid rgba(22,20,16,0.08);
+  border: 1px solid rgba(199,41,11,0.20);
 }
+
+.row--dj .time{ color: var(--orange); }
+.row--dj .name{ color: var(--orange); }
 
 /* ===== ORANGE BAND ===== */
 .band{
