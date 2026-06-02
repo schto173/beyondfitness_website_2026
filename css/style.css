@@ -379,8 +379,8 @@ section[id] { scroll-margin-top: calc(var(--navH) + 10px); }
 
 .row__logo{
   grid-area: logo;
-  height: 28px;
-  width: 28px;
+  height: 36px;
+  width: 50px;
   object-fit: contain;
   opacity: 0.75;
   border-radius: 6px;
