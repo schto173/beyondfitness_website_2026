@@ -367,7 +367,7 @@ section[id] { scroll-margin-top: calc(var(--navH) + 10px); }
 
 .row{
   display: grid;
-  grid-template-columns: 64px 1fr 32px;
+  grid-template-columns: 64px 1fr 36px;
   grid-template-areas:
     "time name logo"
     "time who  logo";
