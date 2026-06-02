@@ -367,15 +367,24 @@ section[id] { scroll-margin-top: calc(var(--navH) + 10px); }
 
 .row{
   display: grid;
-  grid-template-columns: 64px 1fr;
+  grid-template-columns: 64px 1fr 32px;
   grid-template-areas:
-    "time name"
-    "time who";
+    "time name logo"
+    "time who  logo";
   gap: 2px 12px;
   padding: 10px 0;
   border-bottom: 1px solid rgba(22,20,16,0.08);
+  align-items: center;
 }
 
+.row__logo{
+  grid-area: logo;
+  height: 28px;
+  width: 28px;
+  object-fit: contain;
+  opacity: 0.75;
+  border-radius: 6px;
+}
 .time{
   grid-area: time;
   font-weight: 900;
