@@ -543,7 +543,7 @@ section[id] { scroll-margin-top: calc(var(--navH) + 10px); }
   overflow-x: auto;
 }
 .logos img{
-  height: 140px;
+  height: 160px;
   width: auto;
   object-fit: contain;
   opacity: 1;
