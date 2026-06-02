@@ -102,8 +102,9 @@ section[id] { scroll-margin-top: calc(var(--navH) + 10px); }
 
 /* hamburger */
 /* keep hidden on desktop */
+/* hamburger button (desktop hidden, mobile shown via media query) */
 .nav__hamburger{
-  display: none;
+  display: none;                  /* keep hidden on desktop */
   margin-left: auto;
   border: 0;
   background: transparent;
@@ -112,37 +113,43 @@ section[id] { scroll-margin-top: calc(var(--navH) + 10px); }
   padding: 8px;
   border-radius: 10px;
   cursor: pointer;
+
+  display: flex;                  /* ensure flex layout */
+  flex-direction: column;         /* stack bars vertically */
   align-items: center;
   justify-content: center;
 }
 
-/* bars */
+/* bars — stacked, centered, and identical width */
 .nav__hamburger span{
-  display: block;
+  display: block;                 /* important: block so they stack */
   width: 22px;
-  height: 3px;                 /* slightly thicker for visibility */
-  background: var(--ink);      /* or use var(--orange) for more contrast */
-  border-radius: 2px;
-  margin: 4px 0;
+  height: 3px;                    /* thickness */
+  background: var(--ink);         /* or var(--orange) for higher contrast */
+  border-radius: 3px;
+  margin: 4px 0;                  /* vertical spacing between bars */
   transition: transform .25s ease, opacity .2s ease;
+  box-shadow: none;
 }
 
-/* mobile: show as a centered flex button */
+/* show hamburger on mobile */
 @media (max-width: 860px){
   .nav__hamburger{ display: flex; }
 }
 
-/* open state (keeps your existing transforms) */
-.nav__hamburger.open span:nth-child(1){ transform: translateY(8px) rotate(45deg); }
-.nav__hamburger.open span:nth-child(2){ opacity: 0; }
-.nav__hamburger.open span:nth-child(3){ transform: translateY(-8px) rotate(-45deg); }
-
-/* optional: make the touch target easier to see/tap */
-.nav__hamburger:focus,
-.nav__hamburger:hover{
-  outline: none;
-  background: rgba(22,20,16,0.04);
+/* open (X) state — tuned for 3px bars and 4px margin */
+.nav__hamburger.open span:nth-child(1){
+  transform: translateY(7px) rotate(45deg);
 }
+.nav__hamburger.open span:nth-child(2){
+  opacity: 0;
+  transform: translateX(-10px);
+}
+.nav__hamburger.open span:nth-child(3){
+  transform: translateY(-7px) rotate(-45deg);
+}
+
+
 /* ===== HERO ===== */
 .hero{
   background: var(--orange);
@@ -384,25 +391,37 @@ section[id] { scroll-margin-top: calc(var(--navH) + 10px); }
   border-top: 1px solid rgba(22,20,16,0.08);
 }
 
+/* make the logo column auto so width is natural */
 .row{
   display: grid;
-  grid-template-columns: 64px 1fr 36px;
+  grid-template-columns: 64px 1fr auto;   /* time / content / logo (auto width) */
   grid-template-areas:
     "time name logo"
     "time who  logo";
   gap: 2px 12px;
   padding: 10px 0;
   border-bottom: 1px solid rgba(22,20,16,0.08);
-  align-items: center;
+  align-items: stretch;                   /* let children fill row height */
+  min-height: 72px;                       /* controls how tall the row is */
 }
 
+/* logo placed in the logo area, fills row height, width scales naturally */
 .row__logo{
   grid-area: logo;
-  height: 36px;
-  width: 50px;
+  display: block;
+  align-self: stretch;
+  height: 100%;
+  width: auto;
   object-fit: contain;
-  opacity: 0.75;
-  border-radius: 6px;
+  /* optional spacing / visual tweaks */
+  margin-left: 8px;
+  max-height: 140px; /* safety cap for very large screens; adjust as needed */
+}
+
+/* smaller rows on mobile: reduce min-height so logos don't get too big */
+@media (max-width: 860px){
+  .row{ min-height: 56px; }
+  .row__logo{ max-height: 90px; margin-left: 6px; }
 }
 .time{
   grid-area: time;
