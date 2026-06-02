@@ -198,14 +198,28 @@ section[id] { scroll-margin-top: calc(var(--navH) + 10px); }
   background: var(--cream);
   color: var(--ink);
   font-size: 1.4rem;
+  box-shadow: 0 4px 14px rgba(0,0,0,0.18);
+  border: 2px solid rgba(22,20,16,0.15);
+  transition: transform .15s ease, box-shadow .15s ease;
 }
-.btn--cream:hover{ filter: brightness(0.98); }
+.btn--cream:hover{
+  filter: brightness(0.98);
+  transform: translateY(-2px);
+  box-shadow: 0 8px 22px rgba(0,0,0,0.22);
+}
 
 .btn--accent{
   background: var(--orange);
   color: var(--cream);
+  box-shadow: 0 4px 14px rgba(199,41,11,0.35);
+  border: 2px solid rgba(0,0,0,0.10);
+  transition: transform .15s ease, box-shadow .15s ease;
 }
-.btn--accent:hover{ filter: brightness(0.95); }
+.btn--accent:hover{
+  filter: brightness(0.95);
+  transform: translateY(-2px);
+  box-shadow: 0 8px 22px rgba(199,41,11,0.45);
+}
 
 .btn--left{ margin-top: 14px; }
 
