@@ -404,38 +404,37 @@ section[id] { scroll-margin-top: calc(var(--navH) + 10px); }
   border-top: 1px solid rgba(22,20,16,0.08);
 }
 
-/* make the logo column auto so width is natural */
+/* keep row height driven by text; center content vertically */
 .row{
   display: grid;
-  grid-template-columns: 64px 1fr auto;   /* time / content / logo (auto width) */
+  grid-template-columns: 64px 1fr auto;   /* time / content / logo */
   grid-template-areas:
     "time name logo"
     "time who  logo";
-  gap: 2px 12px;
+  gap: 4px 12px;
   padding: 10px 0;
   border-bottom: 1px solid rgba(22,20,16,0.08);
-  align-items: stretch;                   /* let children fill row height */
-  min-height: 72px;                       /* controls how tall the row is */
+  align-items: center;        /* <-- key: prevents logo from stretching row */
+  min-height: 0;              /* ensure rows shrink to text height */
 }
 
-/* logo placed in the logo area, fills row height, width scales naturally */
+/* logo: fill available row height without forcing the row bigger */
 .row__logo{
   grid-area: logo;
   display: block;
-  align-self: stretch;
-  height: 100%;
+  height: 100%;               /* match the row's content height */
+  max-height: 72px;          /* safe cap — tweak if you want larger */
   width: auto;
   object-fit: contain;
-  /* optional spacing / visual tweaks */
   margin-left: 8px;
-  max-height: 140px; /* safety cap for very large screens; adjust as needed */
 }
 
-/* smaller rows on mobile: reduce min-height so logos don't get too big */
+/* mobile: slightly smaller cap so logos don't overwhelm small screens */
 @media (max-width: 860px){
-  .row{ min-height: 56px; }
-  .row__logo{ max-height: 90px; margin-left: 6px; }
+  .row{ padding: 8px 0; gap: 3px 10px; }
+  .row__logo{ max-height: 56px; margin-left: 6px; }
 }
+
 .time{
   grid-area: time;
   font-weight: 900;
