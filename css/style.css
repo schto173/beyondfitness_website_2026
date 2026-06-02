@@ -101,6 +101,7 @@ section[id] { scroll-margin-top: calc(var(--navH) + 10px); }
 }
 
 /* hamburger */
+/* keep hidden on desktop */
 .nav__hamburger{
   display: none;
   margin-left: auto;
@@ -111,19 +112,37 @@ section[id] { scroll-margin-top: calc(var(--navH) + 10px); }
   padding: 8px;
   border-radius: 10px;
   cursor: pointer;
+  align-items: center;
+  justify-content: center;
 }
+
+/* bars */
 .nav__hamburger span{
   display: block;
-  height: 2px;
-  background: var(--ink);
+  width: 22px;
+  height: 3px;                 /* slightly thicker for visibility */
+  background: var(--ink);      /* or use var(--orange) for more contrast */
   border-radius: 2px;
-  margin: 6px 0;
+  margin: 4px 0;
   transition: transform .25s ease, opacity .2s ease;
 }
+
+/* mobile: show as a centered flex button */
+@media (max-width: 860px){
+  .nav__hamburger{ display: flex; }
+}
+
+/* open state (keeps your existing transforms) */
 .nav__hamburger.open span:nth-child(1){ transform: translateY(8px) rotate(45deg); }
 .nav__hamburger.open span:nth-child(2){ opacity: 0; }
 .nav__hamburger.open span:nth-child(3){ transform: translateY(-8px) rotate(-45deg); }
 
+/* optional: make the touch target easier to see/tap */
+.nav__hamburger:focus,
+.nav__hamburger:hover{
+  outline: none;
+  background: rgba(22,20,16,0.04);
+}
 /* ===== HERO ===== */
 .hero{
   background: var(--orange);
@@ -700,8 +719,7 @@ section[id] { scroll-margin-top: calc(var(--navH) + 10px); }
 }
 
 @media (max-width: 860px){
-  .nav__hamburger{ display: inline-flex; align-items: center; justify-content: center; }
-  .nav__links{
+    .nav__links{
     position: absolute;
     top: var(--navH);
     left: 0;
