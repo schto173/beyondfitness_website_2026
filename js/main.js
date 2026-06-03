@@ -105,14 +105,15 @@ document.addEventListener('DOMContentLoaded', () => {
 
 
 // ===== TALKS: expandable rows =====
+// ===== TALKS: reliable expandable rows (replace previous implementation) =====
 (function initTalkExpanders() {
   const talksSection = document.getElementById('talks');
   if (!talksSection) return;
 
-  const rows = talksSection.querySelectorAll('.scheduleList .row');
+  const rows = Array.from(talksSection.querySelectorAll('.scheduleList .row'));
   if (!rows.length) return;
 
-  // Provide a hint under the H2 if not already present
+  // hint
   const h2 = talksSection.querySelector('.h2');
   if (h2 && !talksSection.querySelector('.hint')) {
     const hint = document.createElement('p');
@@ -121,57 +122,67 @@ document.addEventListener('DOMContentLoaded', () => {
     h2.insertAdjacentElement('afterend', hint);
   }
 
-  // helper to close all open rows
+  // ensure details exist for every row
+  rows.forEach(row => {
+    if (!row.querySelector('.talk__details')) {
+      const details = document.createElement('div');
+      details.className = 'talk__details';
+      details.innerHTML = `<p><strong>About this talk:</strong> Placeholder description. Replace with real content.</p><ul><li>Key takeaway #1</li><li>Key takeaway #2</li></ul>`;
+      row.appendChild(details);
+    }
+  });
+
+  function closeRow(row) {
+    const details = row.querySelector('.talk__details');
+    if (!details) return;
+    // set to current height then animate to 0 for smooth close
+    details.style.maxHeight = details.scrollHeight + 'px';
+    requestAnimationFrame(() => {
+      details.style.maxHeight = '0px';
+    });
+    row.classList.remove('is-open');
+    row.setAttribute('aria-expanded', 'false');
+  }
+
+  function openRow(row) {
+    const details = row.querySelector('.talk__details');
+    if (!details) return;
+    row.classList.add('is-open');
+    row.setAttribute('aria-expanded', 'true');
+
+    // force style so scrollHeight includes padding added by CSS .is-open
+    // ensure the element is measurable
+    details.style.display = 'block';
+    // force reflow
+    void details.offsetHeight;
+    // set maxHeight to content height to animate open
+    details.style.maxHeight = details.scrollHeight + 'px';
+  }
+
   function closeAll() {
     rows.forEach(r => {
-      if (r.classList.contains('is-open')) {
-        const details = r.querySelector('.talk__details');
-        if (details) details.style.maxHeight = null;
-        r.classList.remove('is-open');
-        r.setAttribute('aria-expanded', 'false');
-      }
+      if (r.classList.contains('is-open')) closeRow(r);
     });
   }
 
-  rows.forEach((row) => {
-    // make keyboard accessible and ARIA-friendly
+  rows.forEach(row => {
+    const details = row.querySelector('.talk__details');
+
+    // initial collapsed state
+    details.style.maxHeight = '0px';
+    details.style.overflow = 'hidden';
+
     row.setAttribute('role', 'button');
     row.setAttribute('tabindex', '0');
     row.setAttribute('aria-expanded', 'false');
 
-    // if details block not present, inject placeholder content
-    if (!row.querySelector('.talk__details')) {
-      const details = document.createElement('div');
-      details.className = 'talk__details';
-      details.innerHTML = `
-        <p><strong>About this talk:</strong> This is placeholder text describing the talk — what it covers, the format and who it is best for. Replace with real content.</p>
-        <ul>
-          <li>Key takeaway #1</li>
-          <li>Key takeaway #2</li>
-          <li>Audience: beginners to intermediate</li>
-        </ul>
-      `;
-      row.appendChild(details);
-    }
-
-    const details = row.querySelector('.talk__details');
-
-    // Toggle on click (closes others)
     row.addEventListener('click', (e) => {
-      // ignore clicks on actual links inside the row (if any)
-      if (e.target.closest('a')) return;
-
+      if (e.target.closest('a')) return; // ignore link clicks
       const isOpen = row.classList.contains('is-open');
       closeAll();
-      if (!isOpen) {
-        row.classList.add('is-open');
-        row.setAttribute('aria-expanded', 'true');
-        // set maxHeight to enable CSS transition
-        details.style.maxHeight = details.scrollHeight + 'px';
-      }
+      if (!isOpen) openRow(row);
     });
 
-    // Keyboard: Enter or Space toggles
     row.addEventListener('keydown', (e) => {
       if (e.key === 'Enter' || e.key === ' ') {
         e.preventDefault();
@@ -179,17 +190,19 @@ document.addEventListener('DOMContentLoaded', () => {
       }
     });
 
-    // When transition ends and row closed, remove inline maxHeight
+    // cleanup after transition: clear inline maxHeight when fully closed
     details.addEventListener('transitionend', () => {
       if (!row.classList.contains('is-open')) {
-        details.style.maxHeight = null;
+        details.style.maxHeight = '0px';
+      } else {
+        // keep the explicit maxHeight so large content doesn't collapse during repaint
+        details.style.maxHeight = details.scrollHeight + 'px';
       }
     });
   });
 
-  // Close all if user resizes to very small/large (optional)
+  // optional: close all on large resize
   window.addEventListener('resize', () => {
-    // keep state conservative on resize
     if (window.innerWidth > 1200) closeAll();
   });
 })();
