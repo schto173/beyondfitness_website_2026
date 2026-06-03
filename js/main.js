@@ -104,12 +104,11 @@ document.addEventListener('DOMContentLoaded', () => {
 });
 
 
-// ===== TALKS: expandable rows =====
-(function initTalkExpanders() {
+// ===== TALKS: expandable rows =====(function initTalkExpanders() {
   const talksSection = document.getElementById('talks');
   if (!talksSection) return;
 
-  const rows = talksSection.querySelectorAll('.scheduleList .row');
+  const rows = Array.from(talksSection.querySelectorAll('.scheduleList .row'));
   if (!rows.length) return;
 
   // Provide a hint under the H2 if not already present
@@ -121,57 +120,104 @@ document.addEventListener('DOMContentLoaded', () => {
     h2.insertAdjacentElement('afterend', hint);
   }
 
-  // helper to close all open rows
+  // Ensure each details block is set up for animation
+  rows.forEach(row => {
+    const details = row.querySelector('.talk__details');
+    if (!details) return;
+    details.style.overflow = 'hidden';
+    details.style.maxHeight = '0px';
+    // make sure box-sizing is included if not already
+    details.style.boxSizing = details.style.boxSizing || 'border-box';
+
+    // If there are images inside details, update height when they load
+    details.querySelectorAll('img').forEach(img => {
+      img.addEventListener('load', () => {
+        if (row.classList.contains('is-open')) {
+          // recalc to fit newly loaded media
+          details.style.maxHeight = details.scrollHeight + 'px';
+        }
+      });
+    });
+  });
+
+  // helper: close a single row (animates)
+  function closeRow(r) {
+    const details = r.querySelector('.talk__details');
+    if (!details) {
+      r.classList.remove('is-open');
+      r.setAttribute('aria-expanded', 'false');
+      return;
+    }
+
+    // If maxHeight was 'none' (no limit), set it to current height so we can animate to 0
+    if (details.style.maxHeight === 'none') {
+      details.style.maxHeight = details.scrollHeight + 'px';
+    }
+
+    // Animate from current height -> 0
+    // Force a style flush to ensure browser acknowledges the start value
+    details.style.transition = details.style.transition || '';
+    details.style.overflow = 'hidden';
+    // start from measured height (handle cases where it wasn't set)
+    details.style.maxHeight = details.scrollHeight + 'px';
+    requestAnimationFrame(() => {
+      details.style.maxHeight = '0px';
+    });
+
+    r.classList.remove('is-open');
+    r.setAttribute('aria-expanded', 'false');
+  }
+
+  // helper: open a single row (animates)
+  function openRow(r) {
+    const details = r.querySelector('.talk__details');
+    if (!details) {
+      r.classList.add('is-open');
+      r.setAttribute('aria-expanded', 'true');
+      return;
+    }
+
+    // add class first so CSS (padding etc.) takes effect and contributes to scrollHeight
+    r.classList.add('is-open');
+    r.setAttribute('aria-expanded', 'true');
+
+    // Ensure details is visible for measurement
+    details.style.display = 'block';
+    // Force reflow so scrollHeight includes any styles/padding applied by .is-open
+    void details.offsetHeight;
+
+    // Set explicit maxHeight to scrollHeight to animate open
+    details.style.overflow = 'hidden';
+    details.style.maxHeight = details.scrollHeight + 'px';
+
+    // After transition finishes we set maxHeight to 'none' so content can grow naturally
+  }
+
+  // close all (use animated close)
   function closeAll() {
     rows.forEach(r => {
-      if (r.classList.contains('is-open')) {
-        const details = r.querySelector('.talk__details');
-        if (details) details.style.maxHeight = null;
-        r.classList.remove('is-open');
-        r.setAttribute('aria-expanded', 'false');
-      }
+      if (r.classList.contains('is-open')) closeRow(r);
     });
   }
 
+  // Attach handlers
   rows.forEach((row) => {
-    // make keyboard accessible and ARIA-friendly
+    const details = row.querySelector('.talk__details');
+
+    // accessibility
     row.setAttribute('role', 'button');
     row.setAttribute('tabindex', '0');
     row.setAttribute('aria-expanded', 'false');
 
-    // if details block not present, inject placeholder content
-    if (!row.querySelector('.talk__details')) {
-      const details = document.createElement('div');
-      details.className = 'talk__details';
-      details.innerHTML = `
-        <p><strong>About this talk:</strong> This is placeholder text describing the talk — what it covers, the format and who it is best for. Replace with real content.</p>
-        <ul>
-          <li>Key takeaway #1</li>
-          <li>Key takeaway #2</li>
-          <li>Audience: beginners to intermediate</li>
-        </ul>
-      `;
-      row.appendChild(details);
-    }
-
-    const details = row.querySelector('.talk__details');
-
-    // Toggle on click (closes others)
+    // click toggler (ignores clicks on links)
     row.addEventListener('click', (e) => {
-      // ignore clicks on actual links inside the row (if any)
       if (e.target.closest('a')) return;
-
       const isOpen = row.classList.contains('is-open');
       closeAll();
-      if (!isOpen) {
-        row.classList.add('is-open');
-        row.setAttribute('aria-expanded', 'true');
-        // set maxHeight to enable CSS transition
-        details.style.maxHeight = details.scrollHeight + 'px';
-      }
+      if (!isOpen) openRow(row);
     });
 
-    // Keyboard: Enter or Space toggles
+    // keyboard support
     row.addEventListener('keydown', (e) => {
       if (e.key === 'Enter' || e.key === ' ') {
         e.preventDefault();
@@ -179,17 +225,27 @@ document.addEventListener('DOMContentLoaded', () => {
       }
     });
 
-    // When transition ends and row closed, remove inline maxHeight
-    details.addEventListener('transitionend', () => {
-      if (!row.classList.contains('is-open')) {
-        details.style.maxHeight = null;
-      }
-    });
+    // After transition end, tidy inline styles
+    if (details) {
+      details.addEventListener('transitionend', (ev) => {
+        // only handle max-height transitions
+        if (ev.propertyName !== 'max-height') return;
+
+        if (row.classList.contains('is-open')) {
+          // fully opened -> remove maxHeight limit so content can expand naturally
+          details.style.maxHeight = 'none';
+          details.style.overflow = ''; // let CSS decide
+        } else {
+          // fully closed -> keep maxHeight 0 for consistency
+          details.style.maxHeight = '0px';
+          details.style.overflow = 'hidden';
+        }
+      });
+    }
   });
 
-  // Close all if user resizes to very small/large (optional)
+  // Optional: close all when viewport gets wide
   window.addEventListener('resize', () => {
-    // keep state conservative on resize
     if (window.innerWidth > 1200) closeAll();
   });
 })();
