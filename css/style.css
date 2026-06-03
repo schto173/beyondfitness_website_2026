@@ -812,7 +812,7 @@ section[id] { scroll-margin-top: calc(var(--navH) + 10px); }
   right: 12px;
   top: 50%;
   transform: translateY(-50%);
-  font-size: 14px;
+  font-size: 26px;
   color: rgba(22,20,16,0.35);
   transition: transform .18s ease, color .18s ease;
   pointer-events: none;
