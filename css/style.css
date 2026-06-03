@@ -813,7 +813,7 @@ section[id] { scroll-margin-top: calc(var(--navH) + 10px); }
   top: 50%;
   transform: translateY(-50%);
   font-size: 26px;
-  color: rgba(22,20,16,0.35);
+  color: rgba(221, 66, 39, 0.986);
   transition: transform .18s ease, color .18s ease;
   pointer-events: none;
 }
