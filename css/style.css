@@ -407,7 +407,7 @@ section[id] { scroll-margin-top: calc(var(--navH) + 10px); }
 /* keep row height driven by text; center content vertically */
 .row{
   display: grid;
-  grid-template-columns: 50px 1fr auto;   /* time / content / logo */
+  grid-template-columns: 46px 1fr auto;   /* time / content / logo */
   grid-template-areas:
     "time name logo"
     "time who  logo";
