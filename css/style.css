@@ -407,7 +407,7 @@ section[id] { scroll-margin-top: calc(var(--navH) + 10px); }
 /* keep row height driven by text; center content vertically */
 .row{
   display: grid;
-  grid-template-columns: 64px 1fr auto;   /* time / content / logo */
+  grid-template-columns: 50px 1fr auto;   /* time / content / logo */
   grid-template-areas:
     "time name logo"
     "time who  logo";
@@ -423,7 +423,7 @@ section[id] { scroll-margin-top: calc(var(--navH) + 10px); }
   grid-area: logo;
   display: block;
   height: 100%;               /* match the row's content height */
-  max-height: 72px;          /* safe cap — tweak if you want larger */
+  max-height: 46px;          /* safe cap — tweak if you want larger */
   width: auto;
   object-fit: contain;
   margin-left: 8px;
