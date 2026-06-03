@@ -102,3 +102,94 @@ document.addEventListener('DOMContentLoaded', () => {
     sections.forEach((s) => observer.observe(s));
   }
 });
+
+
+// ===== TALKS: expandable rows =====
+(function initTalkExpanders() {
+  const talksSection = document.getElementById('talks');
+  if (!talksSection) return;
+
+  const rows = talksSection.querySelectorAll('.scheduleList .row');
+  if (!rows.length) return;
+
+  // Provide a hint under the H2 if not already present
+  const h2 = talksSection.querySelector('.h2');
+  if (h2 && !talksSection.querySelector('.hint')) {
+    const hint = document.createElement('p');
+    hint.className = 'hint';
+    hint.textContent = 'Click a talk to expand for more details';
+    h2.insertAdjacentElement('afterend', hint);
+  }
+
+  // helper to close all open rows
+  function closeAll() {
+    rows.forEach(r => {
+      if (r.classList.contains('is-open')) {
+        const details = r.querySelector('.talk__details');
+        if (details) details.style.maxHeight = null;
+        r.classList.remove('is-open');
+        r.setAttribute('aria-expanded', 'false');
+      }
+    });
+  }
+
+  rows.forEach((row) => {
+    // make keyboard accessible and ARIA-friendly
+    row.setAttribute('role', 'button');
+    row.setAttribute('tabindex', '0');
+    row.setAttribute('aria-expanded', 'false');
+
+    // if details block not present, inject placeholder content
+    if (!row.querySelector('.talk__details')) {
+      const details = document.createElement('div');
+      details.className = 'talk__details';
+      details.innerHTML = `
+        <p><strong>About this talk:</strong> This is placeholder text describing the talk — what it covers, the format and who it is best for. Replace with real content.</p>
+        <ul>
+          <li>Key takeaway #1</li>
+          <li>Key takeaway #2</li>
+          <li>Audience: beginners to intermediate</li>
+        </ul>
+      `;
+      row.appendChild(details);
+    }
+
+    const details = row.querySelector('.talk__details');
+
+    // Toggle on click (closes others)
+    row.addEventListener('click', (e) => {
+      // ignore clicks on actual links inside the row (if any)
+      if (e.target.closest('a')) return;
+
+      const isOpen = row.classList.contains('is-open');
+      closeAll();
+      if (!isOpen) {
+        row.classList.add('is-open');
+        row.setAttribute('aria-expanded', 'true');
+        // set maxHeight to enable CSS transition
+        details.style.maxHeight = details.scrollHeight + 'px';
+      }
+    });
+
+    // Keyboard: Enter or Space toggles
+    row.addEventListener('keydown', (e) => {
+      if (e.key === 'Enter' || e.key === ' ') {
+        e.preventDefault();
+        row.click();
+      }
+    });
+
+    // When transition ends and row closed, remove inline maxHeight
+    details.addEventListener('transitionend', () => {
+      if (!row.classList.contains('is-open')) {
+        details.style.maxHeight = null;
+      }
+    });
+  });
+
+  // Close all if user resizes to very small/large (optional)
+  window.addEventListener('resize', () => {
+    // keep state conservative on resize
+    if (window.innerWidth > 1200) closeAll();
+  });
+})();

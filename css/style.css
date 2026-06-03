@@ -768,3 +768,62 @@ section[id] { scroll-margin-top: calc(var(--navH) + 10px); }
 }
 
 
+/* hint under the talks title */
+#talks .hint{
+  text-align: center;
+  color: var(--muted);
+  font-size: 13px;
+  margin: 8px 0 18px;
+}
+
+/* make rows look clickable */
+#talks .scheduleList .row{
+  cursor: pointer;
+  position: relative;
+  transition: background .15s linear;
+}
+#talks .scheduleList .row:hover{
+  background: rgba(22,20,16,0.025);
+}
+
+/* details panel: hidden by default, animates via max-height */
+.talk__details{
+  grid-column: 1 / -1;          /* span entire row */
+  overflow: hidden;
+  max-height: 0;
+  transition: max-height .28s ease, padding .18s ease;
+  padding: 0 0;                 /* expands to padding when opened */
+  color: var(--muted);
+  font-size: 14px;
+}
+
+/* visible state */
+.row.is-open .talk__details{
+  padding: 12px 0 8px;
+}
+
+/* optional subtle divider inside details */
+.talk__details p + ul{ margin-top:8px; }
+
+/* small "click to expand" indicator on the right for desktop */
+#talks .row::after{
+  content: "▾";
+  position: absolute;
+  right: 12px;
+  top: 50%;
+  transform: translateY(-50%);
+  font-size: 14px;
+  color: rgba(22,20,16,0.35);
+  transition: transform .18s ease, color .18s ease;
+  pointer-events: none;
+}
+#talks .row.is-open::after{
+  transform: translateY(-50%) rotate(180deg);
+  color: var(--orange);
+}
+
+/* make indicator less intrusive on mobile */
+@media (max-width:860px){
+  #talks .row::after{ right: 8px; font-size: 12px; }
+}
+
