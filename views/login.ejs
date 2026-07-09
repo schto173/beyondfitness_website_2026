@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Admin login · Beyond Fitness</title>
+  <style>
+    body { margin:0; font-family: Inter, system-ui, -apple-system, sans-serif; background:#f4f1ea; }
+    .wrap { min-height:100vh; display:flex; align-items:center; justify-content:center; padding:1rem; }
+    form { background:#fff; padding:2.5rem; border-radius:16px; box-shadow:0 10px 40px rgba(0,0,0,.08); width:100%; max-width:360px; box-sizing:border-box; }
+    h1 { margin:0 0 .25rem; font-size:1.4rem; }
+    p.sub { margin:0 0 1.5rem; color:#666; font-size:.9rem; }
+    input { width:100%; box-sizing:border-box; padding:.8rem 1rem; border:1px solid #ddd; border-radius:10px; font-size:1rem; margin-bottom:1rem; }
+    button { width:100%; padding:.85rem; border:0; border-radius:10px; background:#f26b21; color:#fff; font-size:1rem; font-weight:600; cursor:pointer; }
+    .err { background:#fdecea; color:#b3261e; padding:.7rem .9rem; border-radius:8px; margin-bottom:1rem; font-size:.9rem; }
+  </style>
+</head>
+<body>
+  <div class="wrap">
+    <form method="POST" action="/admin/login">
+      <h1>Beyond Fitness — Admin</h1>
+      <p class="sub">Enter the password to edit the website.</p>
+      <% if (error) { %><div class="err"><%= error %></div><% } %>
+      <input type="password" name="password" placeholder="Password" autofocus required />
+      <button type="submit">Log in</button>
+    </form>
+  </div>
+</body>
+</html>

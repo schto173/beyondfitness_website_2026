@@ -1,0 +1,602 @@
+{
+  "pageTitle": "Beyond Fitness Festival",
+  "links": {
+    "ticketUrl": "https://coacheey.com/public-session/0579db1b-ba28-4fa5-b588-1280867dc0da",
+    "talkRegisterUrl": "https://docs.google.com/forms/d/1fnpVnbvIPZLhfeOLmH2iCoPK3-OpVUrcnVCo369Jxiw",
+    "instagramUrl": "https://instagram.com/beyondfitness.lu",
+    "instagramHandle": "@beyondfitness.lu",
+    "email": "beyondfitness.lu@gmail.com"
+  },
+  "nav": {
+    "logo": "img/logo.png",
+    "ctaText": "Get your tickets",
+    "links": [
+      {
+        "text": "Classes schedule",
+        "href": "#classes"
+      },
+      {
+        "text": "Talks Schedule",
+        "href": "#talks"
+      },
+      {
+        "text": "Market",
+        "href": "#market"
+      },
+      {
+        "text": "FAQ",
+        "href": "#faq"
+      }
+    ]
+  },
+  "hero": {
+    "titleLines": [
+      "BEYOND",
+      "FITNESS",
+      "FESTIVAL"
+    ],
+    "meta": "27–28 June · Kirchberg Amphitheater",
+    "paragraph": "A two-day open-air movement, wellness & community festival in the heart of Luxembourg. Come along or bring your people — kids welcome, dogs too, all ages, all levels. Entry to the grounds is open to everybody.",
+    "imageMain": "img/hero/hero-main.jpg",
+    "imageSecondary": "img/hero/hero-secondary.jpg"
+  },
+  "stats": [
+    {
+      "num": "20+",
+      "label": "Classes",
+      "sub": "across 2 days"
+    },
+    {
+      "num": "10+",
+      "label": "Disciplines",
+      "sub": "Yoga to Crossfit"
+    },
+    {
+      "num": "10+",
+      "label": "Free talks",
+      "sub": "on movement and mindset"
+    }
+  ],
+  "classes": {
+    "heading": "CLASSES SCHEDULE",
+    "buttonText": "Get Your Tickets",
+    "days": [
+      {
+        "title": "SATURDAY",
+        "date": "30 June",
+        "rows": [
+          {
+            "time": "08:00",
+            "name": "CARDIO BOXING",
+            "who": "by Fit & Fresh",
+            "logo": "img/partners/fitfresh.png",
+            "variant": "free"
+          },
+          {
+            "time": "09:00",
+            "name": "PILATES",
+            "who": "with Alisha · House of OM",
+            "logo": "img/partners/houseofOM.jpg",
+            "variant": ""
+          },
+          {
+            "time": "10:00",
+            "name": "CROSSFIT",
+            "who": "with Axel, Esteban & Sophie · Letz CrossFit",
+            "logo": "img/partners/letzcrossfit.png",
+            "variant": ""
+          },
+          {
+            "time": "10:30",
+            "name": "Family Session with Kids: Playoga",
+            "who": "with Micaela",
+            "logo": "img/partners/BEE_MINDFUL.jpg",
+            "variant": "free"
+          },
+          {
+            "time": "11:00",
+            "name": "HIIT",
+            "who": "with Kevin · Koru Health Club",
+            "logo": "img/partners/koru.svg",
+            "variant": ""
+          },
+          {
+            "time": "11:30",
+            "name": "Family Session with Kids: Playoga",
+            "who": "with Micaela",
+            "logo": "img/partners/BEE_MINDFUL.jpg",
+            "variant": "free"
+          },
+          {
+            "time": "12:00",
+            "name": "YOGA",
+            "who": "with Ghaith · House of OM",
+            "logo": "img/partners/houseofOM.jpg",
+            "variant": ""
+          },
+          {
+            "time": "13:00",
+            "name": "BODYCOMBAT LES MILLS",
+            "who": "with Kevin · Koru Health Club",
+            "logo": "img/partners/koru.svg",
+            "variant": ""
+          },
+          {
+            "time": "14:00",
+            "name": "SOUND BATH",
+            "who": "with Ghaith · House of OM",
+            "logo": "img/partners/houseofOM.jpg",
+            "variant": ""
+          },
+          {
+            "time": "15:00",
+            "name": "DANCE",
+            "who": "with MANOEL · Just Move",
+            "logo": "img/partners/justmove.png",
+            "variant": ""
+          },
+          {
+            "time": "16:00",
+            "name": "BODY SHAPE",
+            "who": "with MANOEL · Just Move",
+            "logo": "img/partners/justmove.png",
+            "variant": ""
+          },
+          {
+            "time": "17:00",
+            "name": "PILATES",
+            "who": "with Milica · House of OM",
+            "logo": "img/partners/houseofOM.jpg",
+            "variant": ""
+          },
+          {
+            "time": "18:00",
+            "name": "CIRCUIT TRAINING",
+            "who": "by Fit & Fresh",
+            "logo": "img/partners/fitfresh.png",
+            "variant": ""
+          },
+          {
+            "time": "19:00",
+            "name": "CROSSFIT",
+            "who": "with Axel, Esteban & Sophie · Letz CrossFit",
+            "logo": "img/partners/letzcrossfit.png",
+            "variant": ""
+          },
+          {
+            "time": "20:00–24:00",
+            "name": "DJ SET",
+            "who": "🎵 Free entry 🎵",
+            "logo": "",
+            "variant": "dj"
+          }
+        ]
+      },
+      {
+        "title": "SUNDAY",
+        "date": "28 June",
+        "rows": [
+          {
+            "time": "08:00",
+            "name": "STRETCHING & MOBILITY",
+            "who": "by Fit & Fresh",
+            "logo": "img/partners/fitfresh.png",
+            "variant": "free"
+          },
+          {
+            "time": "09:00",
+            "name": "YOGA",
+            "who": "with Ghaith · House of OM",
+            "logo": "img/partners/houseofOM.jpg",
+            "variant": ""
+          },
+          {
+            "time": "10:00",
+            "name": "CROSSFIT",
+            "who": "with Axel, Esteban & Sophie · Letz CrossFit",
+            "logo": "img/partners/letzcrossfit.png",
+            "variant": ""
+          },
+          {
+            "time": "10:30",
+            "name": "Family Session with Kids: Playoga",
+            "who": "with Micaela",
+            "logo": "img/partners/BEE_MINDFUL.jpg",
+            "variant": "free"
+          },
+          {
+            "time": "11:00",
+            "name": "HIIT",
+            "who": "with Noémie · Koru Health Club",
+            "logo": "img/partners/koru.svg",
+            "variant": ""
+          },
+          {
+            "time": "11:30",
+            "name": "Family Session with Kids: Playoga",
+            "who": "with Micaela",
+            "logo": "img/partners/BEE_MINDFUL.jpg",
+            "variant": "free"
+          },
+          {
+            "time": "12:00",
+            "name": "PILATES",
+            "who": "with Alisha · House of OM",
+            "logo": "img/partners/houseofOM.jpg",
+            "variant": ""
+          },
+          {
+            "time": "13:00",
+            "name": "SOUND BATH",
+            "who": "with Ghaith · House of OM",
+            "logo": "img/partners/houseofOM.jpg",
+            "variant": ""
+          },
+          {
+            "time": "14:00",
+            "name": "FUNCTIONAL",
+            "who": "by The Space Studio",
+            "logo": "img/partners/spacestudio.png",
+            "variant": ""
+          },
+          {
+            "time": "15:00",
+            "name": "BODY SHAPE",
+            "who": "with Cecile · Just Move",
+            "logo": "img/partners/justmove.png",
+            "variant": ""
+          },
+          {
+            "time": "16:00",
+            "name": "BREATHWORK",
+            "who": "by The Space Studio",
+            "logo": "img/partners/spacestudio.png",
+            "variant": ""
+          },
+          {
+            "time": "17:00",
+            "name": "PILATES",
+            "who": "with Milica · House of OM",
+            "logo": "img/partners/houseofOM.jpg",
+            "variant": ""
+          },
+          {
+            "time": "18:00",
+            "name": "CIRCUIT TRAINING",
+            "who": "by Fit & Fresh",
+            "logo": "img/partners/fitfresh.png",
+            "variant": ""
+          },
+          {
+            "time": "19:00",
+            "name": "CROSSFIT",
+            "who": "with Axel, Esteban & Sophie · Letz CrossFit",
+            "logo": "img/partners/letzcrossfit.png",
+            "variant": ""
+          }
+        ]
+      }
+    ]
+  },
+  "pricingBand": {
+    "heading": "BOOK MORE,\nSAVE MORE",
+    "paragraph": "No membership, no full-festival fee — just pick the classes you want. The more you stack in one booking, the bigger your discount. All talks stay free.",
+    "buttonText": "Build your day",
+    "note": "Discount applied automatically at checkout.",
+    "cardImage": "img/discounts-card.png"
+  },
+  "talks": {
+    "heading": "FREE TALKS SCHEDULE",
+    "buttonText": "Register for a talk",
+    "instructorsHeading": "INSTRUCTORS & SPEAKERS",
+    "days": [
+      {
+        "title": "SATURDAY",
+        "date": "30 June",
+        "items": [
+          {
+            "time": "13:00",
+            "title": "BEYOND STRETCHING",
+            "who": "A Somatic Approach to Nervous System Regulation and Chronic Tension Release · Iryna Sagaidak PhD, Somatic Therapist and Feldenkrais Practitioner",
+            "detailsLabel": "What you will learn:",
+            "detailsIntro": "",
+            "bullets": [
+              "Why chronic tension, persistent stress symptoms, and pain often refuse to go away despite exercise, stretching, and physiotherapy — and what the nervous system has to do with it.",
+              "How the brain and nervous system learn to hold tension as a habit, an introduction to neuroplastic symptoms, and what somatic approaches can do that conventional methods can't.",
+              "A live experience of somatic movement (Feldenkrais Method): how gentle, mindful movement can shift the nervous system out of a guarded state and toward ease.",
+              "Practical tools to take home: simple somatic practices to release habitual tension patterns and build lasting regulation from the inside out."
+            ]
+          },
+          {
+            "time": "14:00",
+            "title": "PERSONAL TRAINING BEYOND STEREOTYPES",
+            "who": "Marco Pezzetti · Personal trainer",
+            "detailsLabel": "About this talk:",
+            "detailsIntro": "Personal training is often misunderstood as a service for the wealthy delivered by social media fitness icons. In reality, it is an accessible profession made up of diverse individuals who, like many self-employed professionals in Luxembourg, navigate both opportunities and challenges while helping others achieve their goals.",
+            "bullets": [
+              "How to make personal training accessible and relevant to diverse clients.",
+              "Practical approaches to building trust and long-term client results.",
+              "Real-world examples of overcoming stereotypes and delivering value."
+            ]
+          },
+          {
+            "time": "15:00",
+            "title": "CM ACTIVE LIFE",
+            "who": "Empower Women Through Fitness, Move & Active Lifestyle · Caroline Manuelle (English) · Fitness coach & Wellness",
+            "detailsLabel": "What you will learn:",
+            "detailsIntro": "",
+            "bullets": [
+              "How to self-transform through sports and movement.",
+              "Why sports = health and the impact of regular activity on mental wellbeing.",
+              "The importance of having the right coach and how to find or become one.",
+              "How to overcome mental challenges through sport and physical activity."
+            ]
+          },
+          {
+            "time": "16:00",
+            "title": "BEYOND LONGEVITY: BIOHACKING YOUR HEALTHSPAN",
+            "who": "Manlio Lo Giudice · Founder of MobiGym, Biohacker, Human Potential Development Coach",
+            "detailsLabel": "What you will learn:",
+            "detailsIntro": "",
+            "bullets": [
+              "Why the real goal is not just to live longer, but to stay strong, energetic, mobile, and mentally sharp for longer.",
+              "How simple biohacking tools — movement, strength training, recovery, breath, light, sleep, and nutrition — can support healthspan.",
+              "Why muscle, cardiovascular fitness, and brain health are key pillars of longevity.",
+              "Practical, science-based habits people can start applying immediately to improve energy, resilience, and long-term wellbeing."
+            ]
+          },
+          {
+            "time": "17:00",
+            "title": "STRENGTH TRAINING 30+",
+            "who": "Transform Your Health & Wellbeing · Andreea Marin · Personal Trainer - Nutritional Advisor",
+            "detailsLabel": "What you will learn:",
+            "detailsIntro": "",
+            "bullets": [
+              "Why strength training becomes essential after 30 and how it prevents muscle loss, boosts metabolism, and strengthens bones.",
+              "Real client transformations — hear from three women who changed their lives through strength training.",
+              "Myth-busting session: addressing common misconceptions about weight training, dieting, and starting fitness later in life."
+            ]
+          },
+          {
+            "time": "18:00",
+            "title": "COMO VIVER EM ALTA PERFORMANCE",
+            "who": "Caroline Manuelle (Português) · Fitness coach e Saúde",
+            "detailsLabel": "About this talk:",
+            "detailsIntro": "O poder da transformação através do desporto. Actividade física = Saúde. Importância de ter um coach adequado às suas necessidades. Como superar problemas psicológicos através do desporto.",
+            "bullets": [
+              "Como a atividade física transforma a vida.",
+              "Estratégias práticas para escolher um coach adequado.",
+              "Técnicas para ultrapassar desafios psicológicos através do movimento."
+            ]
+          }
+        ]
+      },
+      {
+        "title": "SUNDAY",
+        "date": "28 June",
+        "items": [
+          {
+            "time": "13:00",
+            "title": "REGULATION OF NERVOUS SYSTEM THROUGH PILATES PRACTICE",
+            "who": "Iro Peklari-Petrou",
+            "detailsLabel": "About this talk:",
+            "detailsIntro": "how breathing works in pilates, the anatomy and mechanics of the breath (which muscles are being used, what happens when we are stressed and how it impacts our breath)",
+            "bullets": [
+              "The principles of pilates",
+              "How through pilates we can regulate our nervous system",
+              "A few words about the nervous system",
+              "The outcome: why we want to do regulate the nervous system through pilates?"
+            ]
+          },
+          {
+            "time": "14:00",
+            "title": "BIOHACKING ABUNDANCE — COACH PSYCHOLOGIST",
+            "who": "Rewiring the Code of Your Beliefs · Miriam Vetrano · Psychologist",
+            "detailsLabel": "About this workshop:",
+            "detailsIntro": "In this interactive workshop, you’ll explore how your beliefs shape the way you perceive opportunities, make decisions, and create results in your life. You will discover how your brain is constantly filtering what you notice, what you may be unconsciously overlooking, and what you believe is possible for you.",
+            "bullets": [
+              "How beliefs filter perception and behaviour.",
+              "Practical exercises to start rewiring limiting beliefs.",
+              "Tools to notice and expand what you believe is possible."
+            ]
+          },
+          {
+            "time": "15:00",
+            "title": "KOUKSUNDO",
+            "who": "Traditional Korean Taoist Mind-Body Practice · Eglė Kumžaitė",
+            "detailsLabel": "About this class:",
+            "detailsIntro": "A short introductory class of Kouksundo practice that includes physical exercises regulating the energy flows in the body, self-acupressure stimulating the functioning of the organs, and breathing meditation with movement calming down the mind. Kouksundo has a healing effect, strengthens the body, brings inner peace and is accessible to everyone.",
+            "bullets": [
+              "Principles and basic exercises of Kouksundo.",
+              "Self-acupressure and breathing practices.",
+              "Who benefits most and how to continue practice safely."
+            ]
+          },
+          {
+            "time": "16:00",
+            "title": "MODERN POSTURE & TECH NECK",
+            "who": "How Breathing, Movement and Clinical Pilates Can Support the Body · Martina Di Modica · Pilates Teacher, Sports Scientist & Massage Therapist",
+            "detailsLabel": "About this talk:",
+            "detailsIntro": "How modern lifestyle habits and screen use affect posture, breathing, and neck tension. The connection between breathing mechanics, stress, and cervical/lower back discomfort. How Clinical Pilates, physiotherapy, and massage therapy can help improve movement quality and reduce chronic tension. Simple breathing and posture awareness techniques participants can immediately apply in daily life.",
+            "bullets": [
+              "Quick posture checks and daily corrections.",
+              "Breathing patterns to reduce neck and upper-back tension.",
+              "Short corrective sequences to integrate into your routine."
+            ]
+          }
+        ]
+      }
+    ]
+  },
+  "instructors": [
+    {
+      "img": "img/instructors/Alisha.jpg",
+      "name": "Alisha",
+      "role": "Pilates",
+      "org": "House of OM"
+    },
+    {
+      "img": "img/instructors/Axel.png",
+      "name": "Axel",
+      "role": "CrossFit",
+      "org": "Letz CrossFit"
+    },
+    {
+      "img": "img/instructors/Esteban.png",
+      "name": "Esteban",
+      "role": "CrossFit",
+      "org": "Letz CrossFit"
+    },
+    {
+      "img": "img/instructors/Ghaith.jpg",
+      "name": "Ghaith",
+      "role": "Yoga & Sound Bath",
+      "org": "House of OM"
+    },
+    {
+      "img": "img/instructors/Kevin.png",
+      "name": "Kevin",
+      "role": "HIIT & Bodycombat",
+      "org": "Les Mills"
+    },
+    {
+      "img": "img/instructors/Milica.jpg",
+      "name": "Milica",
+      "role": "Pilates",
+      "org": "House of OM"
+    },
+    {
+      "img": "img/instructors/Noemie.png",
+      "name": "Noémie",
+      "role": "HIIT",
+      "org": "Koru Health Club"
+    },
+    {
+      "img": "img/instructors/manoel.jpg",
+      "name": "Manoel",
+      "role": "Fitness",
+      "org": "Just Move"
+    },
+    {
+      "img": "img/instructors/cecile.jpg",
+      "name": "Cecile",
+      "role": "Fitness",
+      "org": "Just Move"
+    },
+    {
+      "img": "img/instructors/Sophie.png",
+      "name": "Sophie",
+      "role": "CrossFit",
+      "org": "Letz CrossFit"
+    }
+  ],
+  "market": {
+    "heading": "WELLNESS MARKET",
+    "intro": "Discover the Wellness Market between classes — from food supplements and wellness devices to sportswear, essential oils and small things that make your body feel looked after. Come browse, try, ask questions, and maybe find something you’ll want to take home.",
+    "logos": [
+      {
+        "src": "img/market/bemer.png",
+        "alt": "Bemer"
+      },
+      {
+        "src": "img/market/beyondnutrition.webp",
+        "alt": "Beyond Nutrition"
+      },
+      {
+        "src": "img/market/gardinotalenti.png",
+        "alt": "Il Giardino dei Talenti"
+      },
+      {
+        "src": "img/market/olessence.png",
+        "alt": "Olessence Oils"
+      },
+      {
+        "src": "img/market/vivibenelux.png",
+        "alt": "Vivi Benelux"
+      }
+    ]
+  },
+  "faq": {
+    "heading": "QUESTIONS?",
+    "intro": "Everything about tickets, talks, kids, dogs and the weather. Still stuck?",
+    "buttonText": "Get your classes",
+    "items": [
+      {
+        "q": "HOW DOES PRICING WORK?",
+        "a": "You pay per class — pick exactly the sessions you want. Classes are €20. All wellness & sport talks are free. Kids yoga is free."
+      },
+      {
+        "q": "ARE THE TALKS REALLY FREE?",
+        "a": "Yes — all talks are free."
+      },
+      {
+        "q": "DO I NEED TO BOOK IN ADVANCE?",
+        "a": "Booking ahead guarantees your mat — classes have limited spots and the popular ones sell out. You can also pay on the day if spaces remain. Our Talks require booking as well."
+      },
+      {
+        "q": "CAN I BRING MY KIDS AND MY DOG?",
+        "a": "Absolutely. There's a supervised Kids Corner with Playoga and family activities, and a pet-friendly space with water and shade. All ages, all levels, everyone welcome."
+      },
+      {
+        "q": "WHAT SHOULD I BRING?",
+        "a": "Comfortable kit, water, and a smile. Mats are provided for all classes — bring your own if you prefer. There's a Wellness Market, food trucks and drinks on site all day."
+      },
+      {
+        "q": "WHERE EXACTLY IS IT?",
+        "a": "Kirchberg Amphitheater (Luxembourg)."
+      },
+      {
+        "q": "WHAT IF IT RAINS?",
+        "a": "No stress — we’re covering the festival area with tents. So whether it’s sunshine or a little Luxembourg drama from the sky, we move, stretch, talk and vibe anyway."
+      }
+    ]
+  },
+  "tickets": {
+    "heading": "GET YOUR TICKETS",
+    "paragraph": "Pick your classes. The more you stack, the bigger the discount.",
+    "buttonText": "Book now",
+    "prices": [
+      {
+        "k": "Classes",
+        "v": "€20",
+        "free": false
+      },
+      {
+        "k": "Talks",
+        "v": "FREE",
+        "free": true
+      },
+      {
+        "k": "Kids Yoga",
+        "v": "FREE",
+        "free": true
+      },
+      {
+        "k": "Dogs Classes",
+        "v": "FREE",
+        "free": true
+      }
+    ]
+  },
+  "sponsors": {
+    "heading": "OUR SPONSORS",
+    "logos": [
+      {
+        "src": "img/sponsors/heineken.png",
+        "alt": "Heineken"
+      },
+      {
+        "src": "img/sponsors/lalux_bg.png",
+        "alt": "Lalux"
+      },
+      {
+        "src": "img/sponsors/coachey.png",
+        "alt": "Coachey"
+      }
+    ]
+  },
+  "footer": {
+    "logo": "img/logo.png",
+    "meta": "27–28 June · Kirchberg Amphitheater · Luxembourg"
+  }
+}

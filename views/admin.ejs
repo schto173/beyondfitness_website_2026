@@ -1,0 +1,437 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Admin · Beyond Fitness</title>
+  <style>
+    :root { --accent:#f26b21; --bg:#f4f1ea; --card:#fff; --line:#e4e0d6; --text:#222; --muted:#777; }
+    * { box-sizing: border-box; }
+    body { margin:0; font-family: Inter, system-ui, -apple-system, sans-serif; background:var(--bg); color:var(--text); }
+    header.topbar { position:sticky; top:0; z-index:20; background:#1a1a1a; color:#fff; display:flex; align-items:center; gap:1rem; padding:.7rem 1.2rem; }
+    header.topbar h1 { font-size:1.05rem; margin:0; flex:1; }
+    header.topbar a, header.topbar button { font:inherit; }
+    .btn { border:0; border-radius:9px; padding:.6rem 1.1rem; font-weight:600; cursor:pointer; font-size:.9rem; }
+    .btn--save { background:var(--accent); color:#fff; }
+    .btn--ghost { background:#333; color:#fff; }
+    .btn--sm { padding:.35rem .7rem; font-size:.8rem; border-radius:7px; }
+    .btn--danger { background:#fdecea; color:#b3261e; }
+    .btn--add { background:#eef7ee; color:#1e7d32; }
+    .layout { display:flex; max-width:1100px; margin:0 auto; }
+    nav.tabs { flex:0 0 200px; padding:1rem .5rem; position:sticky; top:56px; align-self:flex-start; }
+    nav.tabs button { display:block; width:100%; text-align:left; background:none; border:0; padding:.6rem .8rem; border-radius:8px; cursor:pointer; font-size:.92rem; color:var(--text); }
+    nav.tabs button.active { background:var(--accent); color:#fff; font-weight:600; }
+    main.panel { flex:1; padding:1.5rem; min-width:0; }
+    .card { background:var(--card); border:1px solid var(--line); border-radius:12px; padding:1.1rem; margin-bottom:1rem; }
+    .card h3 { margin:0 0 .8rem; font-size:1rem; }
+    .field { margin-bottom:.8rem; }
+    .field label { display:block; font-size:.78rem; text-transform:uppercase; letter-spacing:.03em; color:var(--muted); margin-bottom:.25rem; }
+    .field input[type=text], .field input[type=url], .field textarea, .field select {
+      width:100%; padding:.55rem .7rem; border:1px solid var(--line); border-radius:8px; font:inherit; font-size:.92rem; background:#fff; }
+    .field textarea { resize:vertical; min-height:70px; }
+    .row2 { display:flex; gap:.8rem; flex-wrap:wrap; }
+    .row2 > .field { flex:1; min-width:140px; }
+    .itemhead { display:flex; align-items:center; gap:.6rem; margin-bottom:.6rem; }
+    .itemhead .t { font-weight:600; font-size:.9rem; flex:1; color:var(--muted); }
+    .imgfield { display:flex; gap:.8rem; align-items:flex-start; }
+    .imgfield .preview { flex:0 0 72px; height:72px; border:1px solid var(--line); border-radius:8px; background:#faf8f3 center/contain no-repeat; }
+    .imgfield .ctrls { flex:1; min-width:0; }
+    .imgfield .picker { display:flex; gap:.4rem; margin-top:.35rem; flex-wrap:wrap; align-items:center; }
+    .imgfield select { max-width:220px; }
+    .subcard { border:1px dashed var(--line); border-radius:10px; padding:.9rem; margin-bottom:.8rem; background:#fbfaf6; }
+    .hint { font-size:.8rem; color:var(--muted); margin:.2rem 0 1rem; }
+    .toast { position:fixed; bottom:1.2rem; left:50%; transform:translateX(-50%); background:#1a1a1a; color:#fff; padding:.7rem 1.2rem; border-radius:10px; font-size:.9rem; opacity:0; transition:opacity .2s; pointer-events:none; z-index:50; }
+    .toast.show { opacity:1; }
+    .toast.err { background:#b3261e; }
+    @media (max-width:760px){ .layout{ flex-direction:column; } nav.tabs{ position:static; flex:none; display:flex; flex-wrap:wrap; gap:.3rem; } nav.tabs button{ width:auto; } }
+  </style>
+</head>
+<body>
+  <header class="topbar">
+    <h1>Beyond Fitness — Content editor</h1>
+    <a href="/" target="_blank" class="btn btn--ghost">View site ↗</a>
+    <button id="saveBtn" class="btn btn--save">Save changes</button>
+    <form method="POST" action="/admin/logout" style="margin:0;"><button class="btn btn--ghost" type="submit">Log out</button></form>
+  </header>
+
+  <div class="layout">
+    <nav class="tabs" id="tabs"></nav>
+    <main class="panel" id="panel"></main>
+  </div>
+
+  <div class="toast" id="toast"></div>
+
+<script>
+let content = null;
+let activeTab = 'links';
+const imageCache = {}; // folder -> [paths]
+
+const TABS = [
+  ['links', 'General & Links'],
+  ['hero', 'Hero'],
+  ['stats', 'Stats bar'],
+  ['classes', 'Classes schedule'],
+  ['pricingBand', 'Book more band'],
+  ['talks', 'Talks schedule'],
+  ['instructors', 'Instructors'],
+  ['market', 'Market'],
+  ['faq', 'FAQ'],
+  ['tickets', 'Tickets'],
+  ['sponsors', 'Sponsors'],
+  ['footer', 'Footer'],
+];
+
+// ---------- helpers ----------
+function h(tag, props, children) {
+  const e = document.createElement(tag);
+  if (props) for (const k in props) {
+    if (k === 'class') e.className = props[k];
+    else if (k === 'html') e.innerHTML = props[k];
+    else if (k.startsWith('on') && typeof props[k] === 'function') e.addEventListener(k.slice(2), props[k]);
+    else e.setAttribute(k, props[k]);
+  }
+  (children || []).forEach(c => { if (c == null) return; e.appendChild(typeof c === 'string' ? document.createTextNode(c) : c); });
+  return e;
+}
+
+function field(labelText, obj, key, opts) {
+  opts = opts || {};
+  const input = opts.multiline
+    ? h('textarea', {})
+    : h('input', { type: 'text' });
+  input.value = obj[key] != null ? obj[key] : '';
+  input.addEventListener('input', () => { obj[key] = input.value; });
+  return h('div', { class: 'field' }, [ h('label', {}, [labelText]), input ]);
+}
+
+function checkboxField(labelText, obj, key) {
+  const input = h('input', { type: 'checkbox' });
+  input.checked = !!obj[key];
+  input.addEventListener('change', () => { obj[key] = input.checked; });
+  const lab = h('label', { style:'display:flex;align-items:center;gap:.4rem;text-transform:none;' }, [input, labelText]);
+  return h('div', { class: 'field' }, [lab]);
+}
+
+async function loadImages(folder) {
+  if (imageCache[folder]) return imageCache[folder];
+  try {
+    const r = await fetch('/api/admin/images?folder=' + encodeURIComponent(folder));
+    const j = await r.json();
+    imageCache[folder] = j.images || [];
+  } catch (e) { imageCache[folder] = []; }
+  return imageCache[folder];
+}
+
+function imageField(labelText, obj, key, folder) {
+  const preview = h('div', { class: 'preview' });
+  const setPreview = () => { preview.style.backgroundImage = obj[key] ? `url("/${obj[key]}")` : 'none'; };
+  setPreview();
+
+  const pathInput = h('input', { type: 'text' });
+  pathInput.value = obj[key] || '';
+  pathInput.addEventListener('input', () => { obj[key] = pathInput.value; setPreview(); });
+
+  const select = h('select', {});
+  select.appendChild(h('option', { value: '' }, ['— pick existing —']));
+  loadImages(folder).then(imgs => {
+    imgs.forEach(p => select.appendChild(h('option', { value: p }, [p.split('/').pop()])));
+    if (obj[key]) select.value = obj[key];
+  });
+  select.addEventListener('change', () => {
+    if (select.value) { obj[key] = select.value; pathInput.value = select.value; setPreview(); }
+  });
+
+  const fileInput = h('input', { type: 'file', accept: 'image/*', style: 'display:none' });
+  const uploadBtn = h('button', { class: 'btn btn--sm btn--add', type: 'button',
+    onclick: () => fileInput.click() }, ['Upload new']);
+  fileInput.addEventListener('change', async () => {
+    if (!fileInput.files.length) return;
+    const fd = new FormData();
+    fd.append('file', fileInput.files[0]);
+    uploadBtn.textContent = 'Uploading…';
+    try {
+      const r = await fetch('/api/admin/upload?folder=' + encodeURIComponent(folder), { method: 'POST', body: fd });
+      const j = await r.json();
+      if (!r.ok) throw new Error(j.error || 'Upload failed');
+      obj[key] = j.path; pathInput.value = j.path; setPreview();
+      imageCache[folder] = null; // refresh next time
+      select.appendChild(h('option', { value: j.path, selected: 'selected' }, [j.path.split('/').pop()]));
+      toast('Image uploaded');
+    } catch (e) { toast(e.message, true); }
+    uploadBtn.textContent = 'Upload new';
+    fileInput.value = '';
+  });
+
+  return h('div', { class: 'field' }, [
+    h('label', {}, [labelText]),
+    h('div', { class: 'imgfield' }, [
+      preview,
+      h('div', { class: 'ctrls' }, [ pathInput,
+        h('div', { class: 'picker' }, [select, uploadBtn, fileInput]) ])
+    ])
+  ]);
+}
+
+// bullets stored as array <-> textarea (one per line)
+function bulletsField(labelText, obj, key) {
+  const ta = h('textarea', {});
+  ta.value = (obj[key] || []).join('\n');
+  ta.addEventListener('input', () => {
+    obj[key] = ta.value.split('\n').map(s => s.trim()).filter(Boolean);
+  });
+  return h('div', { class: 'field' }, [ h('label', {}, [labelText + ' (one per line)']), ta ]);
+}
+
+function itemCard(titleText, onRemove, bodyEls) {
+  const head = h('div', { class: 'itemhead' }, [
+    h('span', { class: 't' }, [titleText]),
+    onRemove ? h('button', { class: 'btn btn--sm btn--danger', type:'button', onclick: onRemove }, ['Remove']) : null
+  ]);
+  return h('div', { class: 'subcard' }, [head, ...bodyEls]);
+}
+
+function addBtn(text, onClick) {
+  return h('button', { class: 'btn btn--sm btn--add', type: 'button', onclick: onClick }, ['+ ' + text]);
+}
+
+// ---------- tab renderers ----------
+function renderLinks() {
+  const c = content;
+  return [
+    card('Page & links', [
+      field('Browser tab title', c, 'pageTitle'),
+      field('Ticket link (used by all "Get tickets" buttons)', c.links, 'ticketUrl'),
+      field('Talk registration link', c.links, 'talkRegisterUrl'),
+      field('Instagram URL', c.links, 'instagramUrl'),
+      field('Instagram handle (shown text)', c.links, 'instagramHandle'),
+      field('Contact email', c.links, 'email'),
+    ]),
+    card('Navigation bar', [
+      imageField('Logo', c.nav, 'logo', ''),
+      field('"Get tickets" button text', c.nav, 'ctaText'),
+      arrayBlock('Menu links', c.nav.links, () => ({ text: 'New link', href: '#' }), (item, remove) =>
+        itemCard(item.text, remove, [ h('div',{class:'row2'},[ field('Text', item, 'text'), field('Anchor / URL', item, 'href') ]) ])),
+    ]),
+  ];
+}
+
+function renderHero() {
+  const c = content.hero;
+  return [ card('Hero section', [
+    linesField('Big title lines', c, 'titleLines'),
+    field('Date / location line', c, 'meta'),
+    field('Intro paragraph', c, 'paragraph', { multiline: true }),
+    imageField('Main photo', c, 'imageMain', 'hero'),
+    imageField('Secondary photo', c, 'imageSecondary', 'hero'),
+  ]) ];
+}
+
+function renderStats() {
+  return [ card('Stats bar', [
+    h('p',{class:'hint'},['The three numbers under the hero.']),
+    arrayBlock('Stats', content.stats, () => ({ num:'0', label:'Label', sub:'' }), (s, remove) =>
+      itemCard(s.num + ' ' + s.label, remove, [ h('div',{class:'row2'},[
+        field('Number', s, 'num'), field('Label', s, 'label'), field('Sub-label', s, 'sub') ]) ])),
+  ]) ];
+}
+
+function renderClasses() {
+  const c = content.classes;
+  const els = [ card('Section settings', [
+    field('Heading', c, 'heading'), field('Button text', c, 'buttonText') ]) ];
+  c.days.forEach(day => {
+    els.push(card(day.title + ' — ' + day.date, [
+      h('div',{class:'row2'},[ field('Day title', day, 'title'), field('Date', day, 'date') ]),
+      arrayBlock('Classes', day.rows, () => ({ time:'00:00', name:'NEW CLASS', who:'', logo:'', variant:'' }), (row, remove) =>
+        itemCard(row.time + ' · ' + row.name, remove, [
+          h('div',{class:'row2'},[ field('Time', row, 'time'), field('Class name', row, 'name') ]),
+          field('Who / studio', row, 'who'),
+          variantField('Highlight', row, 'variant'),
+          imageField('Logo', row, 'logo', 'partners'),
+        ])),
+    ]));
+  });
+  return els;
+}
+
+function variantField(labelText, obj, key) {
+  const select = h('select', {});
+  [['','Normal'],['free','Free (green)'],['dj','DJ set']].forEach(([v,t]) => {
+    const o = h('option', { value: v }, [t]); if ((obj[key]||'') === v) o.selected = true; select.appendChild(o);
+  });
+  select.addEventListener('change', () => { obj[key] = select.value; });
+  return h('div', { class: 'field' }, [ h('label', {}, [labelText]), select ]);
+}
+
+function renderPricingBand() {
+  const c = content.pricingBand;
+  return [ card('"Book more, save more" band', [
+    field('Heading (line break = new line)', c, 'heading', { multiline: true }),
+    field('Paragraph', c, 'paragraph', { multiline: true }),
+    field('Button text', c, 'buttonText'),
+    field('Small note under button', c, 'note'),
+    imageField('Discounts card image', c, 'cardImage', ''),
+  ]) ];
+}
+
+function renderTalks() {
+  const c = content.talks;
+  const els = [ card('Section settings', [
+    field('Heading', c, 'heading'), field('Button text', c, 'buttonText'),
+    field('Instructors sub-heading', c, 'instructorsHeading') ]) ];
+  c.days.forEach(day => {
+    els.push(card(day.title + ' — ' + day.date, [
+      h('div',{class:'row2'},[ field('Day title', day, 'title'), field('Date', day, 'date') ]),
+      arrayBlock('Talks', day.items,
+        () => ({ time:'00:00', title:'NEW TALK', who:'', detailsLabel:'About this talk:', detailsIntro:'', bullets:[] }),
+        (t, remove) => itemCard(t.time + ' · ' + t.title, remove, [
+          h('div',{class:'row2'},[ field('Time', t, 'time'), field('Talk title', t, 'title') ]),
+          field('Speaker / subtitle', t, 'who', { multiline: true }),
+          field('Details label', t, 'detailsLabel'),
+          field('Intro paragraph (optional)', t, 'detailsIntro', { multiline: true }),
+          bulletsField('Bullet points', t, 'bullets'),
+        ])),
+    ]));
+  });
+  return els;
+}
+
+function renderInstructors() {
+  return [ card('Instructors & speakers carousel', [
+    h('p',{class:'hint'},['Shown in the scrolling carousel. Order here = order on the site.']),
+    arrayBlock('People', content.instructors, () => ({ img:'', name:'New person', role:'', org:'' }), (p, remove) =>
+      itemCard(p.name, remove, [
+        imageField('Photo', p, 'img', 'instructors'),
+        h('div',{class:'row2'},[ field('Name', p, 'name'), field('Role', p, 'role'), field('Studio / org', p, 'org') ]),
+      ])),
+  ]) ];
+}
+
+function renderMarket() {
+  const c = content.market;
+  return [ card('Wellness Market', [
+    field('Heading', c, 'heading'),
+    field('Intro text', c, 'intro', { multiline: true }),
+    arrayBlock('Market logos', c.logos, () => ({ src:'', alt:'' }), (l, remove) =>
+      itemCard(l.alt || 'Logo', remove, [ imageField('Logo', l, 'src', 'market'), field('Name (alt text)', l, 'alt') ])),
+  ]) ];
+}
+
+function renderFaq() {
+  const c = content.faq;
+  return [ card('FAQ', [
+    field('Heading', c, 'heading'),
+    field('Intro sentence', c, 'intro', { multiline: true }),
+    field('Button text', c, 'buttonText'),
+    arrayBlock('Questions', c.items, () => ({ q:'NEW QUESTION?', a:'' }), (item, remove) =>
+      itemCard(item.q, remove, [ field('Question', item, 'q'), field('Answer', item, 'a', { multiline: true }) ])),
+  ]) ];
+}
+
+function renderTickets() {
+  const c = content.tickets;
+  return [ card('Tickets section', [
+    field('Heading', c, 'heading'),
+    field('Paragraph', c, 'paragraph', { multiline: true }),
+    field('Button text', c, 'buttonText'),
+    arrayBlock('Price rows', c.prices, () => ({ k:'Item', v:'€0', free:false }), (p, remove) =>
+      itemCard(p.k, remove, [ h('div',{class:'row2'},[ field('Label', p, 'k'), field('Price', p, 'v') ]), checkboxField('Show as "free" (green)', p, 'free') ])),
+  ]) ];
+}
+
+function renderSponsors() {
+  const c = content.sponsors;
+  return [ card('Sponsors', [
+    field('Heading', c, 'heading'),
+    arrayBlock('Sponsor logos', c.logos, () => ({ src:'', alt:'' }), (l, remove) =>
+      itemCard(l.alt || 'Logo', remove, [ imageField('Logo', l, 'src', 'sponsors'), field('Name (alt text)', l, 'alt') ])),
+  ]) ];
+}
+
+function renderFooter() {
+  const c = content.footer;
+  return [ card('Footer', [
+    imageField('Logo', c, 'logo', ''),
+    field('Footer line (date / location)', c, 'meta'),
+  ]) ];
+}
+
+// generic linesField: array of strings, one per line
+function linesField(labelText, obj, key) {
+  const ta = h('textarea', {});
+  ta.value = (obj[key] || []).join('\n');
+  ta.addEventListener('input', () => { obj[key] = ta.value.split('\n').map(s=>s.trim()).filter(Boolean); });
+  return h('div', { class: 'field' }, [ h('label', {}, [labelText + ' (one per line)']), ta ]);
+}
+
+function card(title, bodyEls) {
+  return h('div', { class: 'card' }, [ h('h3', {}, [title]), ...bodyEls ]);
+}
+
+// arrayBlock: renders a list with per-item card + add button; re-renders panel on change
+function arrayBlock(labelText, arr, factory, itemRenderer) {
+  const container = h('div', {});
+  arr.forEach((item, idx) => {
+    const remove = () => { arr.splice(idx, 1); renderPanel(); };
+    container.appendChild(itemRenderer(item, remove));
+  });
+  container.appendChild(addBtn('Add ' + labelText, () => { arr.push(factory()); renderPanel(); }));
+  return h('div', { class: 'field' }, [ h('label', {}, [labelText]), container ]);
+}
+
+const RENDERERS = {
+  links: renderLinks, hero: renderHero, stats: renderStats, classes: renderClasses,
+  pricingBand: renderPricingBand, talks: renderTalks, instructors: renderInstructors,
+  market: renderMarket, faq: renderFaq, tickets: renderTickets, sponsors: renderSponsors, footer: renderFooter,
+};
+
+function renderTabs() {
+  const nav = document.getElementById('tabs');
+  nav.innerHTML = '';
+  TABS.forEach(([id, label]) => {
+    nav.appendChild(h('button', { class: id === activeTab ? 'active' : '', onclick: () => { activeTab = id; renderTabs(); renderPanel(); } }, [label]));
+  });
+}
+
+function renderPanel() {
+  const panel = document.getElementById('panel');
+  panel.innerHTML = '';
+  (RENDERERS[activeTab]() || []).forEach(el => panel.appendChild(el));
+}
+
+// ---------- save / load ----------
+let toastTimer;
+function toast(msg, isErr) {
+  const t = document.getElementById('toast');
+  t.textContent = msg; t.className = 'toast show' + (isErr ? ' err' : '');
+  clearTimeout(toastTimer);
+  toastTimer = setTimeout(() => { t.className = 'toast'; }, 2600);
+}
+
+document.getElementById('saveBtn').addEventListener('click', async () => {
+  const btn = document.getElementById('saveBtn');
+  btn.disabled = true; btn.textContent = 'Saving…';
+  try {
+    const r = await fetch('/api/admin/content', {
+      method: 'POST', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify(content) });
+    const j = await r.json();
+    if (!r.ok) throw new Error(j.error || 'Save failed');
+    toast('Saved! The website is updated.');
+  } catch (e) { toast(e.message, true); }
+  btn.disabled = false; btn.textContent = 'Save changes';
+});
+
+async function init() {
+  try {
+    const r = await fetch('/api/admin/content');
+    if (r.status === 401) { window.location.href = '/admin/login'; return; }
+    content = await r.json();
+    renderTabs(); renderPanel();
+  } catch (e) {
+    document.getElementById('panel').innerHTML = '<p>Could not load content.</p>';
+  }
+}
+init();
+</script>
+</body>
+</html>

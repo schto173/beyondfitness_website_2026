@@ -1,0 +1,258 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title><%= c.pageTitle %></title>
+
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700;900&display=swap" rel="stylesheet">
+
+    <link rel="stylesheet" href="css/style.css" />
+</head>
+
+<body>
+
+    <nav class="nav" id="navbar">
+        <div class="nav__inner">
+            <a class="nav__logo" href="#top" aria-label="Home">
+                <img src="<%= c.nav.logo %>" alt="Beyond Fitness" />
+            </a>
+
+            <button id="hamburger" class="nav__hamburger" aria-expanded="false" aria-label="Open menu">
+                <span></span><span></span><span></span>
+            </button>
+
+            <ul class="nav__links" id="nav-links">
+                <% c.nav.links.forEach(function(link){ %>
+                <li><a class="nav__link" href="<%= link.href %>"><%= link.text %></a></li>
+                <% }); %>
+                <li><a class="nav__link nav__cta" href="<%= c.links.ticketUrl %>" target="_blank"
+                        rel="noopener noreferrer"><%= c.nav.ctaText %></a></li>
+            </ul>
+        </div>
+    </nav>
+
+    <main id="top">
+        <!-- HERO -->
+        <section class="hero" id="hero">
+            <div class="container hero__grid">
+                <div class="hero__left">
+                    <h1 class="hero__title"><% c.hero.titleLines.forEach(function(line, i){ var last = i === c.hero.titleLines.length - 1; %><% if (last) { %><span><%= line %></span><% } else { %><%= line %><br><% } %><% }); %></h1>
+                    <p class="hero__meta"><%= c.hero.meta %></p>
+
+                    <p><%= c.hero.paragraph %></p>
+                </div>
+
+                <div class="hero__right" aria-label="Hero images">
+                    <div class="hero__imgStack">
+                        <img class="hero__img hero__img--a" src="<%= c.hero.imageMain %>" alt="Festival photo 1" />
+                        <img class="hero__img hero__img--b" src="<%= c.hero.imageSecondary %>" alt="Festival photo 2" />
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- STATS BAR -->
+        <section class="stats" id="stats">
+            <div class="container stats__grid">
+                <% c.stats.forEach(function(s){ %>
+                <div class="stat">
+                    <div class="stat__num"><%= s.num %></div>
+                    <div class="stat__label"><%= s.label %><br><span><%= s.sub %></span></div>
+                </div>
+                <% }); %>
+            </div>
+        </section>
+
+        <!-- CLASSES SCHEDULE -->
+        <section class="section" id="classes">
+            <div class="container">
+                <h2 class="h2"><%= c.classes.heading %></h2>
+
+                <div class="scheduleGrid">
+                    <% c.classes.days.forEach(function(day){ %>
+                    <div class="scheduleCol">
+                        <div class="dayTitle"><%= day.title %> <span><%= day.date %></span></div>
+
+                        <ul class="scheduleList">
+                            <% day.rows.forEach(function(row){ %>
+                            <li class="row<%= row.variant ? ' row--' + row.variant : '' %>">
+                                <span class="time"><%= row.time %></span>
+                                <span class="name"><%= row.name %></span>
+                                <span class="who"><%= row.who %></span>
+                                <% if (row.logo) { %><img class="row__logo" src="<%= row.logo %>" alt=""><% } %>
+                            </li>
+                            <% }); %>
+                        </ul>
+
+                        <a class="btn btn--accent btn--left" href="<%= c.links.ticketUrl %>"
+                            target="_blank" rel="noopener noreferrer"><%= c.classes.buttonText %></a>
+                    </div>
+                    <% }); %>
+                </div>
+            </div>
+        </section>
+
+        <!-- BOOK MORE / SAVE MORE -->
+        <section class="band band--accent" id="pricing">
+            <div class="container band__grid">
+                <div class="band__text">
+                    <h2 class="h2 h2--cream"><% var pl = c.pricingBand.heading.split('\n'); pl.forEach(function(line, i){ %><%= line %><% if (i < pl.length - 1) { %><br><% } %><% }); %></h2>
+                    <p class="p p--cream"><%= c.pricingBand.paragraph %></p>
+                    <a class="btn btn--cream" href="<%= c.links.ticketUrl %>" target="_blank"
+                        rel="noopener noreferrer"><%= c.pricingBand.buttonText %></a>
+                    <p class="small small--cream"><%= c.pricingBand.note %></p>
+                </div>
+
+                <div class="band__card">
+                    <img src="<%= c.pricingBand.cardImage %>" alt="Bulk booking discounts card" />
+                </div>
+            </div>
+        </section>
+
+        <!-- TALKS SCHEDULE -->
+        <section class="section" id="talks">
+            <div class="container">
+                <h2 class="h2"><%= c.talks.heading %></h2>
+
+                <div class="scheduleGrid">
+                    <% c.talks.days.forEach(function(day){ %>
+                    <div class="scheduleCol">
+                        <div class="dayTitle"><%= day.title %> <span><%= day.date %></span></div>
+                        <ul class="scheduleList">
+                            <% day.items.forEach(function(t){ %>
+                            <li class="row" role="button" tabindex="0" aria-expanded="false">
+                                <span class="time"><%= t.time %></span>
+                                <span class="name"><%= t.title %></span>
+                                <span class="who"><%= t.who %></span>
+
+                                <div class="talk__details" aria-hidden="true">
+                                    <p><strong><%= t.detailsLabel %></strong></p>
+                                    <% if (t.detailsIntro) { %><p><%= t.detailsIntro %></p><% } %>
+                                    <% if (t.bullets && t.bullets.length) { %>
+                                    <ul>
+                                        <% t.bullets.forEach(function(b){ %><li><%= b %></li><% }); %>
+                                    </ul>
+                                    <% } %>
+                                </div>
+                            </li>
+                            <% }); %>
+                        </ul>
+
+                        <a class="btn btn--accent btn--left" href="<%= c.links.talkRegisterUrl %>"
+                            target="_blank" rel="noopener noreferrer"><%= c.talks.buttonText %></a>
+                    </div>
+                    <% }); %>
+                </div>
+
+                <h3 class="h3"><%= c.talks.instructorsHeading %></h3>
+            </div>
+        </section>
+
+        <!-- INSTRUCTORS (marquee — rendered twice for a seamless loop) -->
+        <section class="instructors" id="instructors">
+            <div class="marquee" aria-label="Instructors carousel">
+                <div class="marquee__track">
+                    <% for (var pass = 0; pass < 2; pass++) { %>
+                        <% c.instructors.forEach(function(ins){ %>
+                        <article class="card"<%= pass === 1 ? ' aria-hidden="true"' : '' %>>
+                            <img src="<%= ins.img %>" alt="<%= pass === 1 ? '' : ins.name %>">
+                            <div class="card__txt">
+                                <div class="card__name"><%= ins.name %></div>
+                                <div class="card__role"><%= ins.role %></div>
+                                <div class="card__org"><%= ins.org %></div>
+                            </div>
+                        </article>
+                        <% }); %>
+                    <% } %>
+                </div>
+            </div>
+        </section>
+
+        <!-- MARKET -->
+        <section class="section" id="market">
+            <div class="container">
+                <h2 class="h2"><%= c.market.heading %></h2>
+                <h3><%= c.market.intro %></h3>
+                <div class="logos">
+                    <% c.market.logos.forEach(function(logo){ %>
+                    <img src="<%= logo.src %>" alt="<%= logo.alt %>">
+                    <% }); %>
+                </div>
+            </div>
+        </section>
+
+        <!-- QUESTIONS / FAQ -->
+        <section class="questions" id="faq">
+            <div class="container questions__grid">
+                <div class="questions__left">
+                    <h2 class="h2"><%= c.faq.heading %></h2>
+                    <p class="p">
+                        <%= c.faq.intro %>
+                        DM us on Instagram <a href="<%= c.links.instagramUrl %>" target="_blank"
+                            rel="noreferrer"><%= c.links.instagramHandle %></a>
+                        or send us an email: <a href="mailto:<%= c.links.email %>"><%= c.links.email %></a>
+                    </p>
+                    <a class="btn btn--accent" href="#classes"><%= c.faq.buttonText %></a>
+                </div>
+
+                <div class="questions__right">
+                    <div class="faq">
+                        <% c.faq.items.forEach(function(item){ %>
+                        <button class="faq__q"><%= item.q %><span class="faq__icon">+</span></button>
+                        <div class="faq__a"><%= item.a %></div>
+                        <% }); %>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- TICKETS -->
+        <section class="tickets" id="tickets">
+            <div class="container tickets__inner">
+                <h2 class="h2 h2--cream"><%= c.tickets.heading %></h2>
+                <p class="p p--cream"><%= c.tickets.paragraph %></p>
+                <a class="btn btn--cream" href="<%= c.links.ticketUrl %>" target="_blank" rel="noopener noreferrer"><%= c.tickets.buttonText %></a>
+
+                <div class="priceRow">
+                    <% c.tickets.prices.forEach(function(p){ %>
+                    <div class="price<%= p.free ? ' price--free' : '' %>">
+                        <div class="price__k"><%= p.k %></div>
+                        <div class="price__v"><%= p.v %></div>
+                    </div>
+                    <% }); %>
+                </div>
+            </div>
+        </section>
+
+        <!-- SPONSORS -->
+        <section class="section sponsors" id="sponsors">
+            <div class="container">
+                <h2 class="h2"><%= c.sponsors.heading %></h2>
+                <div class="logos">
+                    <% c.sponsors.logos.forEach(function(logo){ %>
+                    <img src="<%= logo.src %>" alt="<%= logo.alt %>">
+                    <% }); %>
+                </div>
+            </div>
+        </section>
+
+        <footer class="footer">
+            <div class="container footer__inner">
+                <img class="footer__logo" src="<%= c.footer.logo %>" alt="Beyond Fitness" />
+                <div class="footer__meta"><%= c.footer.meta %></div>
+                <div class="footer__links">
+                    <a href="<%= c.links.instagramUrl %>" target="_blank" rel="noreferrer"><%= c.links.instagramHandle %></a>
+                    <a href="mailto:<%= c.links.email %>"><%= c.links.email %></a>
+                </div>
+            </div>
+        </footer>
+    </main>
+
+    <script src="js/main.js"></script>
+</body>
+
+</html>
