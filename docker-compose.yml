@@ -1,0 +1,17 @@
+services:
+  website:
+    build: .
+    # image: beyondfitness-website   # uncomment if you prefer building/tagging separately
+    restart: unless-stopped
+    ports:
+      - "3000:3000"
+    environment:
+      # CHANGE THIS before deploying. This is the password the organizers type at /admin.
+      ADMIN_PASSWORD: "changeme-please"
+      # A long random string used to sign the login cookie. Change it once and leave it.
+      SESSION_SECRET: "change-this-to-a-long-random-string"
+      PORT: "3000"
+    volumes:
+      # Persist editable content and uploaded images across container rebuilds.
+      - ./data:/app/data
+      - ./img:/app/img
