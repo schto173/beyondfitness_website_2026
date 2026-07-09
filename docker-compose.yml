@@ -1,17 +1,40 @@
 services:
   website:
     build: .
-    # image: beyondfitness-website   # uncomment if you prefer building/tagging separately
-    restart: unless-stopped
-    ports:
-      - "3000:3000"
+    container_name: beyondfitness_web
+    restart: always
     environment:
       # CHANGE THIS before deploying. This is the password the organizers type at /admin.
       ADMIN_PASSWORD: "changeme-please"
       # A long random string used to sign the login cookie. Change it once and leave it.
+      # Generate one with: openssl rand -hex 32
       SESSION_SECRET: "change-this-to-a-long-random-string"
       PORT: "3000"
     volumes:
       # Persist editable content and uploaded images across container rebuilds.
+      # NOTE: these folders are also tracked in git. If you `git pull` to update the
+      # code, admin edits to data/content.json (and new images in img/) can conflict.
+      # After organizers start editing live, treat the server's data/ and img/ as the
+      # source of truth (commit them, or pull with care).
       - ./data:/app/data
       - ./img:/app/img
+    networks:
+      - traefik_default
+    labels:
+      - "traefik.enable=true"
+      - "traefik.docker.network=traefik_default"
+      - "traefik.http.routers.beyondfitness.rule=Host(`beyondfitness.lu`)"
+      - "traefik.http.routers.beyondfitness.entrypoints=websecure"
+      - "traefik.http.routers.beyondfitness.tls=true"
+      - "traefik.http.routers.beyondfitness.tls.certresolver=letsencrypt"
+      - "traefik.http.routers.beyondfitness.tls.domains[0].main=beyondfitness.lu"
+      # App listens on 3000 (not 80 like the old nginx setup).
+      - "traefik.http.services.beyondfitness.loadbalancer.server.port=3000"
+    # For local testing WITHOUT Traefik, uncomment the two lines below and run
+    # `docker compose up --build` — then open http://localhost:3000
+    # ports:
+    #   - "3000:3000"
+
+networks:
+  traefik_default:
+    external: true
