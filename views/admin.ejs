@@ -33,6 +33,11 @@
     .row2 > .field { flex:1; min-width:140px; }
     .itemhead { display:flex; align-items:center; gap:.6rem; margin-bottom:.6rem; }
     .itemhead .t { font-weight:600; font-size:.9rem; flex:1; color:var(--muted); }
+    .drag-handle { cursor:grab; color:var(--muted); font-size:1rem; padding:0 .2rem; user-select:none; touch-action:none; }
+    .drag-handle:active { cursor:grabbing; }
+    .subcard.dragging { opacity:.55; background:#f3efe6; }
+    .subcard { transition:box-shadow .12s; }
+    .subcard.sortable-chosen { box-shadow:0 2px 10px rgba(0,0,0,.12); }
     .imgfield { display:flex; gap:.8rem; align-items:flex-start; }
     .imgfield .preview { flex:0 0 72px; height:72px; border:1px solid var(--line); border-radius:8px; background:#faf8f3 center/contain no-repeat; }
     .imgfield .ctrls { flex:1; min-width:0; }
@@ -61,6 +66,7 @@
 
   <div class="toast" id="toast"></div>
 
+    <script src="/js/sortable.min.js"></script>
 <script>
 let content = null;
 let activeTab = 'links';
@@ -184,6 +190,7 @@ function bulletsField(labelText, obj, key) {
 
 function itemCard(titleText, onRemove, bodyEls, onMoveUp, onMoveDown) {
   const head = h('div', { class: 'itemhead' }, [
+    h('span', { class: 'drag-handle', title: 'Drag to reorder' }, ['⠿']),
     h('span', { class: 't' }, [titleText]),
     onMoveUp ? h('button', { class: 'btn btn--sm btn--ghost btn--move', type: 'button', title: 'Move up', onclick: onMoveUp }, ['▲']) : null,
     onMoveDown ? h('button', { class: 'btn btn--sm btn--ghost btn--move', type: 'button', title: 'Move down', onclick: onMoveDown }, ['▼']) : null,
@@ -371,7 +378,8 @@ function card(title, bodyEls) {
 }
 
 // arrayBlock: renders a list with per-item card + add button; re-renders panel on change
-// itemRenderer receives (item, remove, moveUp, moveDown) — move* are null at list edges
+// itemRenderer receives (item, remove, moveUp, moveDown) — move* are null at list edges.
+// Items are drag-reorderable via the ⠿ handle (Sortable.js, vendored in js/sortable.min.js).
 function arrayBlock(labelText, arr, factory, itemRenderer) {
   const container = h('div', {});
   const move = (from, to) => {
@@ -386,12 +394,29 @@ function arrayBlock(labelText, arr, factory, itemRenderer) {
     const moveDown = idx < arr.length - 1 ? () => move(idx, idx + 1) : null;
     container.appendChild(itemRenderer(item, remove, moveUp, moveDown));
   });
-  container.appendChild(addBtn('Add ' + labelText, () => {
+  const itemsWrap = h('div', {}, [container]);
+  if (window.Sortable) {
+    Sortable.create(container, {
+      handle: '.drag-handle',
+      animation: 150,
+      ghostClass: 'dragging',
+      onEnd: () => {
+        // DOM order is now authoritative — rewrite the array from it.
+        // Each rendered card remembers its current array index in a property.
+        const ordered = [...container.querySelectorAll('.subcard')].map(el => arr[el._arrIdx]);
+        arr.length = 0;
+        arr.push(...ordered);
+        container.querySelectorAll('.subcard').forEach((el, i) => { el._arrIdx = i; });
+      },
+    });
+  }
+  container.querySelectorAll('.subcard').forEach((el, i) => { el._arrIdx = i; });
+  itemsWrap.appendChild(addBtn('Add ' + labelText, () => {
     arr.push(factory()); renderPanel();
-    const cards = container.querySelectorAll('.subcard');
+    const cards = itemsWrap.querySelectorAll('.subcard');
     if (cards.length) cards[cards.length - 1].scrollIntoView({ block: 'center' });
   }));
-  return h('div', { class: 'field' }, [ h('label', {}, [labelText]), container ]);
+  return h('div', { class: 'field' }, [ h('label', {}, [labelText]), itemsWrap ]);
 }
 
 const RENDERERS = {
