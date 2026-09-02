@@ -182,9 +182,11 @@ function bulletsField(labelText, obj, key) {
   return h('div', { class: 'field' }, [ h('label', {}, [labelText + ' (one per line)']), ta ]);
 }
 
-function itemCard(titleText, onRemove, bodyEls) {
+function itemCard(titleText, onRemove, bodyEls, onMoveUp, onMoveDown) {
   const head = h('div', { class: 'itemhead' }, [
     h('span', { class: 't' }, [titleText]),
+    onMoveUp ? h('button', { class: 'btn btn--sm btn--ghost btn--move', type: 'button', title: 'Move up', onclick: onMoveUp }, ['▲']) : null,
+    onMoveDown ? h('button', { class: 'btn btn--sm btn--ghost btn--move', type: 'button', title: 'Move down', onclick: onMoveDown }, ['▼']) : null,
     onRemove ? h('button', { class: 'btn btn--sm btn--danger', type:'button', onclick: onRemove }, ['Remove']) : null
   ]);
   return h('div', { class: 'subcard' }, [head, ...bodyEls]);
@@ -209,8 +211,8 @@ function renderLinks() {
     card('Navigation bar', [
       imageField('Logo', c.nav, 'logo', ''),
       field('"Get tickets" button text', c.nav, 'ctaText'),
-      arrayBlock('Menu links', c.nav.links, () => ({ text: 'New link', href: '#' }), (item, remove) =>
-        itemCard(item.text, remove, [ h('div',{class:'row2'},[ field('Text', item, 'text'), field('Anchor / URL', item, 'href') ]) ])),
+      arrayBlock('Menu links', c.nav.links, () => ({ text: 'New link', href: '#' }), (item, remove, up, down) =>
+        itemCard(item.text, remove, [ h('div',{class:'row2'},[ field('Text', item, 'text'), field('Anchor / URL', item, 'href') ]) ], up, down)),
     ]),
   ];
 }
@@ -229,9 +231,9 @@ function renderHero() {
 function renderStats() {
   return [ card('Stats bar', [
     h('p',{class:'hint'},['The three numbers under the hero.']),
-    arrayBlock('Stats', content.stats, () => ({ num:'0', label:'Label', sub:'' }), (s, remove) =>
+    arrayBlock('Stats', content.stats, () => ({ num:'0', label:'Label', sub:'' }), (s, remove, up, down) =>
       itemCard(s.num + ' ' + s.label, remove, [ h('div',{class:'row2'},[
-        field('Number', s, 'num'), field('Label', s, 'label'), field('Sub-label', s, 'sub') ]) ])),
+        field('Number', s, 'num'), field('Label', s, 'label'), field('Sub-label', s, 'sub') ]) ], up, down)),
   ]) ];
 }
 
@@ -242,13 +244,13 @@ function renderClasses() {
   c.days.forEach(day => {
     els.push(card(day.title + ' — ' + day.date, [
       h('div',{class:'row2'},[ field('Day title', day, 'title'), field('Date', day, 'date') ]),
-      arrayBlock('Classes', day.rows, () => ({ time:'00:00', name:'NEW CLASS', who:'', logo:'', variant:'' }), (row, remove) =>
+      arrayBlock('Classes', day.rows, () => ({ time:'00:00', name:'NEW CLASS', who:'', logo:'', variant:'' }), (row, remove, up, down) =>
         itemCard(row.time + ' · ' + row.name, remove, [
           h('div',{class:'row2'},[ field('Time', row, 'time'), field('Class name', row, 'name') ]),
           field('Who / studio', row, 'who'),
           variantField('Highlight', row, 'variant'),
           imageField('Logo', row, 'logo', 'partners'),
-        ])),
+        ], up, down)),
     ]));
   });
   return els;
@@ -284,13 +286,13 @@ function renderTalks() {
       h('div',{class:'row2'},[ field('Day title', day, 'title'), field('Date', day, 'date') ]),
       arrayBlock('Talks', day.items,
         () => ({ time:'00:00', title:'NEW TALK', who:'', detailsLabel:'About this talk:', detailsIntro:'', bullets:[] }),
-        (t, remove) => itemCard(t.time + ' · ' + t.title, remove, [
+        (t, remove, up, down) => itemCard(t.time + ' · ' + t.title, remove, [
           h('div',{class:'row2'},[ field('Time', t, 'time'), field('Talk title', t, 'title') ]),
           field('Speaker / subtitle', t, 'who', { multiline: true }),
           field('Details label', t, 'detailsLabel'),
           field('Intro paragraph (optional)', t, 'detailsIntro', { multiline: true }),
           bulletsField('Bullet points', t, 'bullets'),
-        ])),
+        ], up, down)),
     ]));
   });
   return els;
@@ -299,11 +301,11 @@ function renderTalks() {
 function renderInstructors() {
   return [ card('Instructors & speakers carousel', [
     h('p',{class:'hint'},['Shown in the scrolling carousel. Order here = order on the site.']),
-    arrayBlock('People', content.instructors, () => ({ img:'', name:'New person', role:'', org:'' }), (p, remove) =>
+    arrayBlock('People', content.instructors, () => ({ img:'', name:'New person', role:'', org:'' }), (p, remove, up, down) =>
       itemCard(p.name, remove, [
         imageField('Photo', p, 'img', 'instructors'),
         h('div',{class:'row2'},[ field('Name', p, 'name'), field('Role', p, 'role'), field('Studio / org', p, 'org') ]),
-      ])),
+      ], up, down)),
   ]) ];
 }
 
@@ -312,8 +314,8 @@ function renderMarket() {
   return [ card('Wellness Market', [
     field('Heading', c, 'heading'),
     field('Intro text', c, 'intro', { multiline: true }),
-    arrayBlock('Market logos', c.logos, () => ({ src:'', alt:'' }), (l, remove) =>
-      itemCard(l.alt || 'Logo', remove, [ imageField('Logo', l, 'src', 'market'), field('Name (alt text)', l, 'alt') ])),
+    arrayBlock('Market logos', c.logos, () => ({ src:'', alt:'' }), (l, remove, up, down) =>
+      itemCard(l.alt || 'Logo', remove, [ imageField('Logo', l, 'src', 'market'), field('Name (alt text)', l, 'alt') ], up, down)),
   ]) ];
 }
 
@@ -323,8 +325,8 @@ function renderFaq() {
     field('Heading', c, 'heading'),
     field('Intro sentence', c, 'intro', { multiline: true }),
     field('Button text', c, 'buttonText'),
-    arrayBlock('Questions', c.items, () => ({ q:'NEW QUESTION?', a:'' }), (item, remove) =>
-      itemCard(item.q, remove, [ field('Question', item, 'q'), field('Answer', item, 'a', { multiline: true }) ])),
+    arrayBlock('Questions', c.items, () => ({ q:'NEW QUESTION?', a:'' }), (item, remove, up, down) =>
+      itemCard(item.q, remove, [ field('Question', item, 'q'), field('Answer', item, 'a', { multiline: true }) ], up, down)),
   ]) ];
 }
 
@@ -334,8 +336,8 @@ function renderTickets() {
     field('Heading', c, 'heading'),
     field('Paragraph', c, 'paragraph', { multiline: true }),
     field('Button text', c, 'buttonText'),
-    arrayBlock('Price rows', c.prices, () => ({ k:'Item', v:'€0', free:false }), (p, remove) =>
-      itemCard(p.k, remove, [ h('div',{class:'row2'},[ field('Label', p, 'k'), field('Price', p, 'v') ]), checkboxField('Show as "free" (green)', p, 'free') ])),
+    arrayBlock('Price rows', c.prices, () => ({ k:'Item', v:'€0', free:false }), (p, remove, up, down) =>
+      itemCard(p.k, remove, [ h('div',{class:'row2'},[ field('Label', p, 'k'), field('Price', p, 'v') ]), checkboxField('Show as "free" (green)', p, 'free') ], up, down)),
   ]) ];
 }
 
@@ -343,8 +345,8 @@ function renderSponsors() {
   const c = content.sponsors;
   return [ card('Sponsors', [
     field('Heading', c, 'heading'),
-    arrayBlock('Sponsor logos', c.logos, () => ({ src:'', alt:'' }), (l, remove) =>
-      itemCard(l.alt || 'Logo', remove, [ imageField('Logo', l, 'src', 'sponsors'), field('Name (alt text)', l, 'alt') ])),
+    arrayBlock('Sponsor logos', c.logos, () => ({ src:'', alt:'' }), (l, remove, up, down) =>
+      itemCard(l.alt || 'Logo', remove, [ imageField('Logo', l, 'src', 'sponsors'), field('Name (alt text)', l, 'alt') ], up, down)),
   ]) ];
 }
 
@@ -369,13 +371,26 @@ function card(title, bodyEls) {
 }
 
 // arrayBlock: renders a list with per-item card + add button; re-renders panel on change
+// itemRenderer receives (item, remove, moveUp, moveDown) — move* are null at list edges
 function arrayBlock(labelText, arr, factory, itemRenderer) {
   const container = h('div', {});
+  const move = (from, to) => {
+    const y = window.scrollY;
+    [arr[to], arr[from]] = [arr[from], arr[to]];
+    renderPanel();
+    window.scrollTo(0, y);
+  };
   arr.forEach((item, idx) => {
-    const remove = () => { arr.splice(idx, 1); renderPanel(); };
-    container.appendChild(itemRenderer(item, remove));
+    const remove = () => { const y = window.scrollY; arr.splice(idx, 1); renderPanel(); window.scrollTo(0, y); };
+    const moveUp = idx > 0 ? () => move(idx, idx - 1) : null;
+    const moveDown = idx < arr.length - 1 ? () => move(idx, idx + 1) : null;
+    container.appendChild(itemRenderer(item, remove, moveUp, moveDown));
   });
-  container.appendChild(addBtn('Add ' + labelText, () => { arr.push(factory()); renderPanel(); }));
+  container.appendChild(addBtn('Add ' + labelText, () => {
+    arr.push(factory()); renderPanel();
+    const cards = container.querySelectorAll('.subcard');
+    if (cards.length) cards[cards.length - 1].scrollIntoView({ block: 'center' });
+  }));
   return h('div', { class: 'field' }, [ h('label', {}, [labelText]), container ]);
 }
 
