@@ -20,6 +20,10 @@
         "href": "#talks"
       },
       {
+        "text": "Community runs",
+        "href": "#community-runs"
+      },
+      {
         "text": "Market",
         "href": "#market"
       },
@@ -423,6 +427,61 @@
               "Breathing patterns to reduce neck and upper-back tension.",
               "Short corrective sequences to integrate into your routine."
             ]
+          }
+        ]
+      }
+    ]
+  },
+  "communityRuns": {
+    "heading": "COMMUNITY RUNS",
+    "intro": "Lace up and join the pack — free group runs on Saturday and Sunday. All paces welcome, nobody gets left behind.",
+    "buttonText": "Join a run",
+    "buttonUrl": "",
+    "days": [
+      {
+        "title": "SATURDAY",
+        "date": "30 June",
+        "rows": [
+          {
+            "time": "08:00",
+            "name": "SUNRISE 5K",
+            "who": "easy pace · meet at the amphitheater",
+            "logo": "",
+            "variant": ""
+          },
+          {
+            "time": "10:00",
+            "name": "TRAIL EXPLORER 8K",
+            "who": "with Letz CrossFit · moderate pace",
+            "logo": "img/partners/letzcrossfit.png",
+            "variant": ""
+          },
+          {
+            "time": "17:00",
+            "name": "SUNSET FUN RUN 3K",
+            "who": "walk / jog friendly · kids & dogs welcome",
+            "logo": "",
+            "variant": "free"
+          }
+        ]
+      },
+      {
+        "title": "SUNDAY",
+        "date": "28 June",
+        "rows": [
+          {
+            "time": "08:30",
+            "name": "LONG RUN 10K",
+            "who": "steady pace · led by the Beyond Fitness crew",
+            "logo": "",
+            "variant": ""
+          },
+          {
+            "time": "11:00",
+            "name": "RECOVERY JOG 4K",
+            "who": "chatty pace · coffee after",
+            "logo": "",
+            "variant": "free"
           }
         ]
       }

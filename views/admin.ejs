@@ -79,6 +79,7 @@ const TABS = [
   ['classes', 'Classes schedule'],
   ['pricingBand', 'Book more band'],
   ['talks', 'Talks schedule'],
+  ['communityRuns', 'Community runs'],
   ['instructors', 'Instructors'],
   ['market', 'Market'],
   ['faq', 'FAQ'],
@@ -305,6 +306,42 @@ function renderTalks() {
   return els;
 }
 
+function renderCommunityRuns() {
+  const c = content.communityRuns || (content.communityRuns = {
+    heading: 'COMMUNITY RUNS', intro: '', buttonText: 'Join a run', buttonUrl: '', days: [],
+  });
+  const els = [ card('Section settings', [
+    field('Heading', c, 'heading'),
+    field('Intro text', c, 'intro', { multiline: true }),
+    h('div',{class:'row2'},[ field('Button text', c, 'buttonText'), field('Button URL (blank = ticket link)', c, 'buttonUrl') ]),
+  ]) ];
+  c.days.forEach((day, dayIdx) => {
+    els.push(card(day.title + ' — ' + day.date, [
+      h('div',{class:'row2'},[ field('Day title', day, 'title'), field('Date', day, 'date') ]),
+      arrayBlock('Runs', day.rows, () => ({ time:'00:00', name:'NEW RUN', who:'', logo:'', variant:'' }), (row, remove, up, down) =>
+        itemCard(row.time + ' · ' + row.name, remove, [
+          h('div',{class:'row2'},[ field('Time', row, 'time'), field('Run name', row, 'name') ]),
+          field('Who / pace / meeting point', row, 'who'),
+          variantField('Highlight', row, 'variant'),
+          imageField('Logo', row, 'logo', 'partners'),
+        ], up, down)),
+      h('button', { class:'btn btn--sm btn--danger', type:'button',
+        onclick: () => { const y = window.scrollY; c.days.splice(dayIdx, 1); renderPanel(); window.scrollTo(0, y); } },
+        ['Remove this day']),
+    ]));
+  });
+  const addDay = card('Add a day', [
+    h('p',{class:'hint'},['The schedule shows one card per day (e.g. Saturday and Sunday). Add the days you need.']),
+    addBtn('Add day (SATURDAY)', () => {
+      c.days.push({ title:'SATURDAY', date:'', rows:[] }); renderPanel();
+      const cards = document.querySelectorAll('#panel > .card');
+      if (cards.length) cards[cards.length - 1].scrollIntoView({ block: 'center' });
+    }),
+  ]);
+  els.push(addDay);
+  return els;
+}
+
 function renderInstructors() {
   return [ card('Instructors & speakers carousel', [
     h('p',{class:'hint'},['Shown in the scrolling carousel. Order here = order on the site.']),
@@ -421,7 +458,8 @@ function arrayBlock(labelText, arr, factory, itemRenderer) {
 
 const RENDERERS = {
   links: renderLinks, hero: renderHero, stats: renderStats, classes: renderClasses,
-  pricingBand: renderPricingBand, talks: renderTalks, instructors: renderInstructors,
+  pricingBand: renderPricingBand, talks: renderTalks, communityRuns: renderCommunityRuns,
+  instructors: renderInstructors,
   market: renderMarket, faq: renderFaq, tickets: renderTickets, sponsors: renderSponsors, footer: renderFooter,
 };
 
