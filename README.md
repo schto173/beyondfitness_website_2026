@@ -48,13 +48,38 @@ environment:
 
 `docker-compose.yml` mounts two folders as volumes so edits survive rebuilds:
 
-```yaml
+```
 volumes:
   - ./data:/app/data   # content.json
   - ./img:/app/img     # all images / uploaded logos
 ```
 
 **Back up `data/` and `img/`** and you have backed up the whole site's content.
+
+### Updating the server (git pull)
+
+`data/content.json` on the server holds the organizers' live edits (made via the
+admin panel), so it is usually "dirty" in git's eyes. Code updates only touch
+`views/`, `css/`, `server/` etc. and pull cleanly. If a pull ever reports:
+
+```
+error: Your local changes to the following files would be overwritten by merge:
+        data/content.json
+```
+
+park the live edits, pull, then re-apply them:
+
+```
+git stash push -m "prod admin edits" data/content.json
+git pull
+git stash pop
+docker compose up --build -d
+```
+
+`git stash pop` merges the live edits into the updated file. Convention:
+**content changes happen only via the admin panel on the server** — never edit
+`data/content.json` in feature branches once the site is live, or every deploy
+will need the stash dance.
 
 ## For the organizers — using the admin panel
 
