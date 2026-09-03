@@ -113,6 +113,38 @@
             </div>
         </section>
 
+        <!-- COMMUNITY RUNS -->
+        <% if (c.communityRuns) { %>
+        <section class="section section--dark" id="community-runs">
+            <div class="container">
+                <h2 class="h2"><%= c.communityRuns.heading %></h2>
+                <% if (c.communityRuns.intro) { %><p class="p"><%= c.communityRuns.intro %></p><% } %>
+
+                <div class="scheduleGrid">
+                    <% c.communityRuns.days.forEach(function(day){ %>
+                    <div class="scheduleCol">
+                        <div class="dayTitle"><%= day.title %> <span><%= day.date %></span></div>
+
+                        <ul class="scheduleList">
+                            <% day.rows.forEach(function(row){ %>
+                            <li class="row<%= row.variant ? ' row--' + row.variant : '' %>">
+                                <span class="time"><%= row.time %></span>
+                                <span class="name"><%= row.name %></span>
+                                <span class="who"><%= row.who %></span>
+                                <% if (row.logo) { %><img class="row__logo" src="<%= row.logo %>" alt=""><% } %>
+                            </li>
+                            <% }); %>
+                        </ul>
+
+                        <a class="btn btn--accent btn--left" href="<%= c.communityRuns.buttonUrl || c.links.ticketUrl %>"
+                            target="_blank" rel="noopener noreferrer"><%= c.communityRuns.buttonText %></a>
+                    </div>
+                    <% }); %>
+                </div>
+            </div>
+        </section>
+        <% } %>
+
         <!-- TALKS SCHEDULE -->
         <section class="section" id="talks">
             <div class="container">
@@ -151,38 +183,6 @@
                 <h3 class="h3"><%= c.talks.instructorsHeading %></h3>
             </div>
         </section>
-
-        <!-- COMMUNITY RUNS -->
-        <% if (c.communityRuns) { %>
-        <section class="section section--dark" id="community-runs">
-            <div class="container">
-                <h2 class="h2"><%= c.communityRuns.heading %></h2>
-                <% if (c.communityRuns.intro) { %><p class="p"><%= c.communityRuns.intro %></p><% } %>
-
-                <div class="scheduleGrid">
-                    <% c.communityRuns.days.forEach(function(day){ %>
-                    <div class="scheduleCol">
-                        <div class="dayTitle"><%= day.title %> <span><%= day.date %></span></div>
-
-                        <ul class="scheduleList">
-                            <% day.rows.forEach(function(row){ %>
-                            <li class="row<%= row.variant ? ' row--' + row.variant : '' %>">
-                                <span class="time"><%= row.time %></span>
-                                <span class="name"><%= row.name %></span>
-                                <span class="who"><%= row.who %></span>
-                                <% if (row.logo) { %><img class="row__logo" src="<%= row.logo %>" alt=""><% } %>
-                            </li>
-                            <% }); %>
-                        </ul>
-
-                        <a class="btn btn--accent btn--left" href="<%= c.communityRuns.buttonUrl || c.links.ticketUrl %>"
-                            target="_blank" rel="noopener noreferrer"><%= c.communityRuns.buttonText %></a>
-                    </div>
-                    <% }); %>
-                </div>
-            </div>
-        </section>
-        <% } %>
 
         <!-- INSTRUCTORS (marquee — rendered twice for a seamless loop) -->
         <section class="instructors" id="instructors">
