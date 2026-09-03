@@ -476,6 +476,17 @@ section[id] { scroll-margin-top: calc(var(--navH) + 10px); }
 .row--dj .time{ color: var(--orange); }
 .row--dj .name{ color: var(--orange); }
 
+/* ===== COMMUNITY RUNS (dark band) ===== */
+/* Band goes dark; the cream day cards stay untouched so schedule text
+   keeps its original dark-on-cream contrast. Only the section-level
+   text flips to cream. */
+.section--dark{
+  background: var(--ink);
+  color: var(--cream);
+}
+.section--dark .h2{ color: var(--cream); }
+.section--dark .p{ color: rgba(239,232,220,0.82); }
+
 /* ===== ORANGE BAND ===== */
 .band{
   padding: 44px 0;
